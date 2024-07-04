@@ -1,0 +1,14 @@
+server:
+  port: 8765
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          uri: https://github.com/vaibhav-jadhav0512/social-app
+          search-paths: /config/{application}
+          username: vaibhav-jadhav0512
+          password: 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
