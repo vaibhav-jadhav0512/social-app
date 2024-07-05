@@ -25,8 +25,14 @@ public class AuthRepositoryImpl implements AuthRepository {
 		log.info("Finding by username: {}", username);
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userName", username);
-		UserInfo obj = template.queryForObject(AuthQueries.FIND_BY_USER_NAME, paramMap, new UserRowMapper());
-		log.info("User:{}", obj.toString());
-		return obj;
+		try {
+
+			UserInfo obj = template.queryForObject(AuthQueries.FIND_BY_USER_NAME, paramMap, new UserRowMapper());
+			log.info("User:{}", obj.toString());
+			return obj;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 }

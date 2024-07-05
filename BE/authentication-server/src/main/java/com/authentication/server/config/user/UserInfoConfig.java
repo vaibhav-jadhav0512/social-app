@@ -1,4 +1,4 @@
-package com.authentication.server.config;
+package com.authentication.server.config.user;
 
 import java.util.Arrays;
 import java.util.Collection;

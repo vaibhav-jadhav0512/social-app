@@ -1,4 +1,4 @@
-package com.authentication.server.config;
+package com.authentication.server.config.jwt;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -32,7 +32,7 @@ public class JwtTokenGenerator {
 
 		String permissions = getPermissionsFromRoles(roles);
 
-		JwtClaimsSet claims = JwtClaimsSet.builder().issuer("atquil").issuedAt(Instant.now())
+		JwtClaimsSet claims = JwtClaimsSet.builder().issuedAt(Instant.now())
 				.expiresAt(Instant.now().plus(15, ChronoUnit.MINUTES)).subject(authentication.getName())
 				.claim("scope", permissions).build();
 
