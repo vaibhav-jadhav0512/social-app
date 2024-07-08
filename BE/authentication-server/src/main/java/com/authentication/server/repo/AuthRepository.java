@@ -13,4 +13,6 @@ public interface AuthRepository {
 
 	void revokeRefreshToken(String refreshToken);
 
+	void saveUser(UserInfo userDetails);
+
 }

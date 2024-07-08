@@ -14,7 +14,9 @@ import com.authentication.server.config.jwt.JwtTokenGenerator;
 import com.authentication.server.model.UserInfo;
 import com.authentication.server.model.dto.AuthResponseDto;
 import com.authentication.server.model.dto.RefreshTokenDto;
+import com.authentication.server.model.dto.UserRegistrationDto;
 import com.authentication.server.model.enums.TokenType;
+import com.authentication.server.model.mapper.UserInfoMapper;
 import com.authentication.server.repo.AuthRepository;
 
 import jakarta.servlet.http.Cookie;
@@ -31,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
 	private AuthRepository repository;
 	@Autowired
 	private final JwtTokenGenerator jwtTokenGenerator;
+	private final UserInfoMapper userInfoMapper;
 
 	@Override
 	public UserInfo findByUserName(String username) {
@@ -104,5 +107,31 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public void revokeRefreshToken(String refreshToken) {
 		repository.revokeRefreshToken(refreshToken);
+	}
+
+	@Override
+	public AuthResponseDto registerUser(UserRegistrationDto userRegistrationDto,
+			HttpServletResponse httpServletResponse) {
+		try {
+			log.info("[AuthService:registerUser]User Registration Started with :::{}", userRegistrationDto);
+			UserInfo user = repository.findByUserName(userRegistrationDto.userName());
+			if (user != null) {
+				throw new Exception("User Already Exist");
+			}
+			UserInfo userDetails = userInfoMapper.convertToEntity(userRegistrationDto);
+			Authentication authentication = createAuthenticationObject(userDetails);
+			String accessToken = jwtTokenGenerator.generateAccessToken(authentication);
+			String refreshToken = jwtTokenGenerator.generateRefreshToken(authentication);
+			repository.saveUser(userDetails);
+			saveUserRefreshToken(userDetails, refreshToken);
+			createRefreshTokenCookie(httpServletResponse, refreshToken);
+			log.info("[AuthService:registerUser] User:{} Successfully registered", userDetails.getUserName());
+			return AuthResponseDto.builder().accessToken(accessToken).accessTokenExpiry(5 * 60)
+					.userName(userDetails.getUserName()).tokenType(TokenType.Bearer).build();
+		} catch (Exception e) {
+			log.error("[AuthService:registerUser]Exception while registering the user due to :" + e.getMessage());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+		}
+
 	}
 }

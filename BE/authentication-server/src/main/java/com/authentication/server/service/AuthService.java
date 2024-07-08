@@ -5,8 +5,10 @@ import org.springframework.security.core.Authentication;
 
 import com.authentication.server.model.UserInfo;
 import com.authentication.server.model.dto.AuthResponseDto;
+import com.authentication.server.model.dto.UserRegistrationDto;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 public interface AuthService {
 
@@ -17,5 +19,8 @@ public interface AuthService {
 	Object getAccessTokenUsingRefreshToken(String authorizationHeader);
 
 	void revokeRefreshToken(String refreshToken);
+
+	AuthResponseDto registerUser(@Valid UserRegistrationDto userRegistrationDto,
+			HttpServletResponse httpServletResponse);
 
 }

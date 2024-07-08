@@ -103,4 +103,12 @@ public class SecurityConfig {
 					ex.accessDeniedHandler(new BearerTokenAccessDeniedHandler());
 				}).build();
 	}
+
+	@Order(5)
+	@Bean
+	public SecurityFilterChain registerSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/sign-up/**"))
+				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
+	}
 }
