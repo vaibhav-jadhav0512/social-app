@@ -56,7 +56,8 @@ public class SecurityConfig {
 	@Order(2)
 	@Bean
 	public SecurityFilterChain apiSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/api/**")).csrf(AbstractHttpConfigurer::disable)
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/validate-token/**"))
+				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

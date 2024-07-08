@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.authentication.server.model.dto.ConnValidationResponse;
 import com.authentication.server.model.dto.UserRegistrationDto;
 import com.authentication.server.service.AuthService;
 
@@ -50,6 +52,12 @@ public class AuthController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
 		return ResponseEntity.ok(authService.registerUser(userRegistrationDto, httpServletResponse));
+	}
+
+	@GetMapping("/validate-token")
+	public ResponseEntity<ConnValidationResponse> validateGet(Authentication authentication) {
+		return ResponseEntity.ok(ConnValidationResponse.builder().username(authentication.getName())
+				.authorities(authentication.getAuthorities()).isAuthenticated(true).build());
 	}
 
 }
