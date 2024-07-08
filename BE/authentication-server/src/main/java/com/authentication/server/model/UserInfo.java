@@ -1,5 +1,9 @@
 package com.authentication.server.model;
 
+import java.util.List;
+
+import com.authentication.server.model.dto.RefreshTokenDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,4 +20,5 @@ public class UserInfo {
 	private String password;
 	private String mobile;
 	private String roles;
+	private List<RefreshTokenDto> refreshTokens;
 }
