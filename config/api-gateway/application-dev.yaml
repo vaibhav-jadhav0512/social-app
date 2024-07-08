@@ -7,7 +7,7 @@ spring:
         - id: authentication-server
           uri: lb://authentication-server
           predicates:
-            - Path=/auth/**, /api/**
+            - Path=/sign-in, /sign-up, /refresh-token, /validate-token, /api/**
 eureka:
   instance:
     prefer-ip-address: true
