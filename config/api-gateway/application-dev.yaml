@@ -8,6 +8,8 @@ spring:
           uri: lb://authentication-server
           predicates:
             - Path=/sign-in, /sign-up, /refresh-token, /validate-token, /logout
+          filters:
+            - AuthenticationFilter
 eureka:
   instance:
     prefer-ip-address: true
