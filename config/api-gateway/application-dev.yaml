@@ -7,7 +7,7 @@ spring:
         - id: authentication-server
           uri: lb://authentication-server
           predicates:
-            - Path=/sign-in, /sign-up, /refresh-token, /validate-token, /logout
+            - Path=/sign-in, /sign-up, /refresh-token, /validate-token, /logout, /api/**
           filters:
             - AuthenticationFilter
 eureka:
