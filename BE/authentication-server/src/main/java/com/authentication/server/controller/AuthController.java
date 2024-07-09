@@ -54,6 +54,7 @@ public class AuthController {
 		return ResponseEntity.ok(authService.registerUser(userRegistrationDto, httpServletResponse));
 	}
 
+	@PreAuthorize("hasAuthority('SCOPE_READ')")
 	@GetMapping("/validate-token")
 	public ResponseEntity<ConnValidationResponse> validateGet(Authentication authentication) {
 		return ResponseEntity.ok(ConnValidationResponse.builder().username(authentication.getName())
