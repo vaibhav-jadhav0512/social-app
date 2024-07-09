@@ -43,7 +43,7 @@ public class SecurityConfig {
 	@Order(1)
 	@Bean
 	public SecurityFilterChain signInSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/sign-in/**"))
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/sign-in/**"))
 				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.userDetailsService(userInfoManagerConfig)
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -56,7 +56,7 @@ public class SecurityConfig {
 	@Order(2)
 	@Bean
 	public SecurityFilterChain apiSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/validate-token/**"))
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/validate-token/**"))
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
@@ -73,7 +73,7 @@ public class SecurityConfig {
 	@Order(3)
 	@Bean
 	public SecurityFilterChain refreshTokenSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/refresh-token/**"))
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/refresh-token/**"))
 				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -89,7 +89,7 @@ public class SecurityConfig {
 	@Order(4)
 	@Bean
 	public SecurityFilterChain logoutSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/logout/**"))
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/logout/**"))
 				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 				.oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -108,7 +108,7 @@ public class SecurityConfig {
 	@Order(5)
 	@Bean
 	public SecurityFilterChain registerSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/sign-up/**"))
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/sign-up/**"))
 				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
 	}
