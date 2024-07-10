@@ -42,11 +42,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 		};
 	}
 	private boolean isPublicEndpoint(String path) {
-		return path.startsWith("/sign-in") || path.startsWith("/sign-up") || path.startsWith("/refresh-token")
-				|| path.startsWith("/validate-token") || path.startsWith("/logout");
+		return path.startsWith("/auth");
 	}
 	private boolean validateToken(String token) {
-		String url = "http://localhost:8888/validate-token";
+		String url = "http://authentication-server:8888/auth/validate-token";
 		try {
 			ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(token),
 					Object.class);
