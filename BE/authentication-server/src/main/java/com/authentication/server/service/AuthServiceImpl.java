@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
 		String username = userInfoEntity.getUserName();
 		String password = userInfoEntity.getPassword();
 		String roles = userInfoEntity.getRoles();
-		String[] roleArray = roles.split(",");
+		String[] roleArray = roles != null ? roles.split(",") : new String[] { "ROLE_USER" };
 		GrantedAuthority[] authorities = Arrays.stream(roleArray).map(role -> (GrantedAuthority) role::trim)
 				.toArray(GrantedAuthority[]::new);
 		return new UsernamePasswordAuthenticationToken(username, password, Arrays.asList(authorities));

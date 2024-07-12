@@ -80,12 +80,10 @@ public class AuthRepositoryImpl implements AuthRepository {
 		log.info("Saving user to db: {}", userDetails.toString());
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("userName", userDetails.getUserName());
-		paramMap.put("firstName", userDetails.getFirstName());
-		paramMap.put("lastName", userDetails.getLastName());
+		paramMap.put("name", userDetails.getName());
 		paramMap.put("email", userDetails.getEmail());
 		paramMap.put("mobile", userDetails.getMobile());
 		paramMap.put("password", userDetails.getPassword());
-		paramMap.put("roles", userDetails.getRoles());
 		template.update(AuthQueries.SAVE_USER, paramMap);
 	}
 }

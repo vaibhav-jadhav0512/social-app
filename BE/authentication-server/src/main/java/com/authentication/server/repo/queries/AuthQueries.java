@@ -11,8 +11,8 @@ public class AuthQueries {
 			+ "FROM" + "    auth.users u" + "    INNER JOIN auth.refresh_tokens r ON u.user_name = r.user_name "
 			+ "WHERE r.refresh_token =:refreshToken";
 	public static final String SAVE_USER = "INSERT INTO auth.users "
-			+ "(user_id, user_name, first_name, last_name, email, \"password\", mobile, roles)\n"
-			+ "VALUES(nextval('auth.users_user_id_seq'::regclass), :userName, :firstName, :lastName, :email, :password, :mobile, :roles);";
+			+ "(user_id, user_name, name, email, \"password\", mobile)\n"
+			+ "VALUES(nextval('auth.users_user_id_seq'::regclass), :userName,:name, :email, :password, :mobile);";
 	public static String REVOKE_REFRESH_TOKEN = "UPDATE auth.refresh_tokens "
 			+ "SET revoked=true WHERE refresh_token=:refreshToken";
 
