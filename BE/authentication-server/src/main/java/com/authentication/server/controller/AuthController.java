@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.authentication.server.model.UserInfo;
 import com.authentication.server.model.dto.ConnValidationResponse;
 import com.authentication.server.model.dto.UserRegistrationDto;
 import com.authentication.server.service.AuthService;
@@ -61,6 +62,12 @@ public class AuthController {
 	public ResponseEntity<ConnValidationResponse> validateGet(Authentication authentication) {
 		return ResponseEntity.ok(ConnValidationResponse.builder().username(authentication.getName())
 				.authorities(authentication.getAuthorities()).isAuthenticated(true).build());
+	}
+
+	@GetMapping("/user")
+	public ResponseEntity<UserInfo> getUser(Authentication authentication) {
+		return new ResponseEntity<>(authService.findByUserName(authentication.getName()), HttpStatus.OK);
+
 	}
 
 }

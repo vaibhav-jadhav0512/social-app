@@ -13,14 +13,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SignupValidation } from "@/lib/validation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Loader from "@/components/shared/Loader";
-import { signUpUser } from "@/lib/functions/httpRequests";
 import { useToast } from "@/components/ui/use-toast";
+import { useCreateUserAccountMutation } from "@/lib/react-query/queriesAndMutation";
+import { useUserContext } from "@/context/AuthContext";
 
 const SignUpForm = () => {
   const { toast } = useToast();
-  const isLoading = false;
+  const navigate = useNavigate();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+    useCreateUserAccountMutation();
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -30,9 +34,9 @@ const SignUpForm = () => {
       password: "",
     },
   });
-  const handleSignup = (values: z.infer<typeof SignupValidation>) => {
+  const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
     console.log(values);
-    signUpUser(values)
+    await createUserAccount(values)
       .then((data) => {
         toast({
           title: "User sign up successfully",
@@ -46,6 +50,14 @@ const SignUpForm = () => {
           variant: "destructive",
         });
       });
+    const isLoggedIn = await checkAuthUser();
+    if (isLoggedIn) {
+      form.reset();
+      navigate("/");
+    } else {
+      toast({ title: "Login failed. Please try again." });
+      return;
+    }
   };
   return (
     <>
@@ -121,7 +133,7 @@ const SignUpForm = () => {
             />
 
             <Button type="submit" className="shad-button_primary">
-              {isLoading ? (
+              {isCreatingUser || isUserLoading ? (
                 <div className="flex-center gap-2">
                   <Loader /> Loading...
                 </div>

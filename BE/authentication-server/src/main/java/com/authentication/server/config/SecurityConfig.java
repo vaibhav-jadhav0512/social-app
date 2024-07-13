@@ -112,4 +112,20 @@ public class SecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).build();
 	}
+
+	@Order(6)
+	@Bean
+	public SecurityFilterChain userSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		return httpSecurity.securityMatcher(new AntPathRequestMatcher("/auth/user**"))
+				.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+				.oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(new JwtAccessTokenFilter(rsaKeyRecord, jwtTokenUtils),
+						UsernamePasswordAuthenticationFilter.class)
+				.exceptionHandling(ex -> {
+					log.error("[SecurityConfig:apiSecurityFilterChain] Exception due to :{}", ex);
+					ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint());
+					ex.accessDeniedHandler(new BearerTokenAccessDeniedHandler());
+				}).httpBasic(withDefaults()).build();
+	}
 }

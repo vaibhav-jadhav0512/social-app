@@ -3,6 +3,7 @@ package com.authentication.server.model;
 import java.util.List;
 
 import com.authentication.server.model.dto.RefreshTokenDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class UserInfo {
 	private String userName;
 	private String name;
 	private String email;
+	@JsonIgnore
 	private String password;
 	private String mobile;
 	private String roles;
