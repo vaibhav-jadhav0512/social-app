@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from "axios";
 export const signUpUser = async (
   userData: INewUser
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://localhost:8080/auth/sign-up";
+  const apiUrl = "http://192.168.1.110:8080/auth/sign-up";
   try {
     const response: AxiosResponse<SignUpResponse> = await axios.post(
       apiUrl,
@@ -24,7 +24,7 @@ export const signUpUser = async (
 export const signInUser = async (
   userData: ISignIn
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://localhost:8080/auth/sign-in";
+  const apiUrl = "http://192.168.1.110:8080/auth/sign-in";
   try {
     const credentials = btoa(`${userData.userName}:${userData.password}`);
     const response: AxiosResponse<SignUpResponse> = await axios.post(
@@ -46,7 +46,7 @@ export const signInUser = async (
 };
 
 export const getCurrentUser = async (): Promise<IUser> => {
-  const apiUrl = "http://localhost:8080/auth/user";
+  const apiUrl = "http://192.168.1.110:8080/auth/user";
   try {
     const response: AxiosResponse<IUser> = await axios.get(apiUrl, {
       headers: {
@@ -59,4 +59,7 @@ export const getCurrentUser = async (): Promise<IUser> => {
     console.log(error);
     throw error;
   }
+};
+export const signOutAccount = async () => {
+  await localStorage.removeItem("token");
 };
