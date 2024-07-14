@@ -54,7 +54,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      navigate("/sign-up");
+      navigate("/sign-in");
     }
     checkAuthUser();
   }, []);
