@@ -1,0 +1,18 @@
+package com.posts.service.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class FileMetadata {
+
+	private int id;
+	private int postId;
+	private String fileUrl;
+	private byte[] fileData;
+	private String fileType;
+	private String fileName;
+}
