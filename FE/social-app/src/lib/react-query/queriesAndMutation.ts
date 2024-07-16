@@ -8,8 +8,10 @@ import {
   signInUser,
   signUpUser,
   signOutAccount,
+  createPost,
 } from "../functions/httpRequests";
-import { INewUser, ISignIn } from "@/types";
+import { INewPost, INewUser, ISignIn, IUpdatePost } from "@/types";
+import { QUERY_KEYS } from "./queryKeys";
 
 export const useCreateUserAccountMutation = () => {
   return useMutation({
@@ -30,5 +32,27 @@ export const useSignInAccount = () => {
 export const useSignOutAccount = () => {
   return useMutation({
     mutationFn: signOutAccount,
+  });
+};
+export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: INewPost) => createPost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
+  });
+};
+export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: IUpdatePost) => updatePost(post),
+    onSuccess: (data: IUpdatePost) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.postId],
+      });
+    },
   });
 };

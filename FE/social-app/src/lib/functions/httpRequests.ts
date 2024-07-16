@@ -1,4 +1,4 @@
-import { INewUser, ISignIn, IUser } from "@/types";
+import { INewPost, INewUser, ISignIn, IUser } from "@/types";
 import { SignUpResponse, UserSignUpData } from "./userTypes";
 
 import axios, { AxiosResponse } from "axios";
@@ -62,4 +62,23 @@ export const getCurrentUser = async (): Promise<IUser> => {
 };
 export const signOutAccount = async () => {
   await localStorage.removeItem("token");
+};
+export const createPost = async (data: INewPost): Promise<IUser> => {
+  const apiUrl = "http://192.168.1.110:8080/post/create";
+  try {
+    const response: AxiosResponse<IUser> = await axios.post(
+      apiUrl,
+      { data },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log("User:", response.data);
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
 };
