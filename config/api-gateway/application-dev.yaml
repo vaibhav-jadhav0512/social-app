@@ -14,6 +14,8 @@ spring:
           uri: lb://posts-service
           predicates:
             - Path=/posts/**
+          filters:
+            - AuthenticationFilter
 eureka:
   instance:
     prefer-ip-address: true

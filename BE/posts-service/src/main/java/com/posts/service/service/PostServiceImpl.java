@@ -25,4 +25,9 @@ public class PostServiceImpl implements PostService {
 		repo.insertFiles(fileMetadataList);
 	}
 
+	@Override
+	public Post getPostById(int postId) {
+		return repo.getPostById(postId);
+	}
+
 }

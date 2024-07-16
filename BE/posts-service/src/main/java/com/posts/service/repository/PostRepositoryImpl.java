@@ -1,6 +1,8 @@
 package com.posts.service.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.posts.service.model.FileMetadata;
 import com.posts.service.model.Post;
+import com.posts.service.repository.rowmapper.FileMapper;
+import com.posts.service.repository.rowmapper.PostMapper;
 import com.posts.service.repository.sql.PostQueries;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +44,19 @@ public class PostRepositoryImpl implements PostRepository {
 	public void insertFiles(List<FileMetadata> fileMetadataList) {
 		for (FileMetadata fileMetadata : fileMetadataList) {
 			MapSqlParameterSource paramMap = new MapSqlParameterSource()
-					.addValue("fileData", fileMetadata.getFileData()).addValue("fileName", fileMetadata.getFileName())
-					.addValue("postId", fileMetadata.getPostId()).addValue("fileType", fileMetadata.getFileType());
+					.addValue("postId", fileMetadata.getPostId()).addValue("url", fileMetadata.getUrl());
 			template.update(PostQueries.INSERT_FILE, paramMap);
 		}
+	}
+
+	@Override
+	public Post getPostById(int postId) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("postId", postId);
+		Post post = template.queryForObject(PostQueries.GET_BY_POST_ID, paramMap, new PostMapper());
+		List<FileMetadata> files = template.query(PostQueries.GET_FILES_BY_POST_ID, paramMap, new FileMapper());
+		post.setFiles(files);
+		return post;
 	}
 
 }

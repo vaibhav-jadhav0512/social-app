@@ -11,4 +11,6 @@ public interface PostRepository {
 
 	void insertFiles(List<FileMetadata> fileMetadataList);
 
+	Post getPostById(int postId);
+
 }

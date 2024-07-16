@@ -11,8 +11,5 @@ public class FileMetadata {
 
 	private int id;
 	private int postId;
-	private String fileUrl;
-	private byte[] fileData;
-	private String fileType;
-	private String fileName;
+	private String url;
 }
