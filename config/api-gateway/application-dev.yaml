@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8090
 spring:
   cloud:
     gateway:
@@ -10,11 +10,24 @@ spring:
             - Path=/auth/**
           filters:
             - AuthenticationFilter
+	      - id: posts-service
+          uri: lb://posts-service
+          predicates:
+            - Path=/posts/**
+          filters:
+            - AuthenticationFilter
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
 eureka:
   instance:
-    prefer-ip-address: true
+    hostname: localhost
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
