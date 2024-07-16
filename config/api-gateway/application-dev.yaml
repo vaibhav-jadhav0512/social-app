@@ -5,13 +5,13 @@ spring:
     gateway:
       routes:
         - id: authentication-server
-          uri: http://localhost:8888
+          uri: lb://authentication-server
           predicates:
             - Path=/auth/**
           filters:
             - AuthenticationFilter
 	      - id: posts-service
-          uri: http://localhost:8001
+          uri: lb://posts-service
           predicates:
             - Path=/posts/**
           filters:
