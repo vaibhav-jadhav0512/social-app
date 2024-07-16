@@ -10,7 +10,7 @@ spring:
             - Path=/auth/**
           filters:
             - AuthenticationFilter
-	- id: posts-service
+	      - id: posts-service
           uri: lb://posts-service
           predicates:
             - Path=/posts/**
