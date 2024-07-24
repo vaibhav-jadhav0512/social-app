@@ -14,7 +14,7 @@ export type IUpdateUser = {
 };
 
 export type INewPost = {
-  userId: string;
+  userName: string;
   caption: string;
   file: File[];
   location?: string;
@@ -59,4 +59,13 @@ export type IContextType = {
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
+};
+
+export type Document = {
+  id: string;
+  title: string;
+  content: string;
+  authorId: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
