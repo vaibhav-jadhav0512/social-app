@@ -45,14 +45,14 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 		return path.startsWith("/auth");
 	}
 	private boolean validateToken(String token) {
-		String url = "http://authentication-server:8888/auth/validate-token";
+		String url = "http://localhost:8888/auth/validate-token";
 		try {
 			ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(token),
 					Object.class);
 			Map<String, Object> responseBody = (Map<String, Object>) response.getBody();
 			return (boolean) responseBody.get("authenticated");
 		} catch (HttpClientErrorException | HttpServerErrorException e) {
-			throw new RuntimeException("Error");
+			throw new RuntimeException("JWT Parse error");
 		}
 	}
 

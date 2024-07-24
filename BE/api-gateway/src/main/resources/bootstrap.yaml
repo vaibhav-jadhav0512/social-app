@@ -1,6 +1,30 @@
+server:
+  port: 8181
 spring:
-  application:
-    name: api-gateway
   cloud:
-    config:
-      uri: http://localhost:8765
+    gateway:
+      routes:
+        - id: authentication-server
+          uri: lb://authentication-server
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+        - id: posts-service
+          uri: lb://posts-service
+          predicates:
+            - Path=/posts/**
+          filters:
+            - AuthenticationFilter
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
