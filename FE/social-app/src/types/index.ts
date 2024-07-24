@@ -16,9 +16,9 @@ export type IUpdateUser = {
 export type INewPost = {
   userName: string;
   caption: string;
-  file: File[];
-  location?: string;
-  tags?: string;
+  files: File[];
+  location: string;
+  tags: string;
 };
 
 export type IUpdatePost = {
@@ -26,9 +26,9 @@ export type IUpdatePost = {
   caption: string;
   imageId: string;
   imageUrl: URL;
-  file: File[];
-  location?: string;
-  tags?: string;
+  files: File[];
+  location: string;
+  tags: string;
 };
 
 export type IUser = {
@@ -68,4 +68,12 @@ export type Document = {
   authorId: string;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type IPostType = {
+  caption: string;
+  file: [];
+  location: string;
+  tags: string;
+  imageUrl: string;
 };

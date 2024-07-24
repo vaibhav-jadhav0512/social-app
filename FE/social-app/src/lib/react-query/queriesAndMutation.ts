@@ -9,6 +9,7 @@ import {
   signUpUser,
   signOutAccount,
   createPost,
+  updatePost,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
