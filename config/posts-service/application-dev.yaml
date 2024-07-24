@@ -4,9 +4,9 @@ spring:
   servlet:
     multipart:
       max-file-size: 50MB
-      max-request-size: 50MB 	
+      max-request-size: 50MB
   datasource:
-    url: jdbc:postgresql://localhost:5332/postgres
+    url: jdbc:postgresql://192.168.1.110:5332/postgres
     username: root
     password: root
     driver-class-name: org.postgresql.Driver
