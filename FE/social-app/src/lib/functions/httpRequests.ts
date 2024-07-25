@@ -7,7 +7,7 @@ import { useUserContext } from "@/context/AuthContext";
 export const signUpUser = async (
   userData: INewUser
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://192.168.1.110:8181/auth/sign-up";
+  const apiUrl = "http://localhost:8181/auth/sign-up";
   try {
     const response: AxiosResponse<SignUpResponse> = await axios.post(
       apiUrl,
@@ -25,7 +25,7 @@ export const signUpUser = async (
 export const signInUser = async (
   userData: ISignIn
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://192.168.1.110:8181/auth/sign-in";
+  const apiUrl = "http://localhost:8181/auth/sign-in";
   try {
     const credentials = btoa(`${userData.userName}:${userData.password}`);
     const response: AxiosResponse<SignUpResponse> = await axios.post(
@@ -47,7 +47,7 @@ export const signInUser = async (
 };
 
 export const getCurrentUser = async (): Promise<IUser> => {
-  const apiUrl = "http://192.168.1.110:8181/auth/user";
+  const apiUrl = "http://localhost:8181/auth/user";
   try {
     const response: AxiosResponse<IUser> = await axios.get(apiUrl, {
       headers: {
@@ -65,10 +65,10 @@ export const signOutAccount = async () => {
   await localStorage.removeItem("token");
 };
 export const createPost = async (post: INewPost): Promise<INewPost> => {
-  const apiUrl = "http://192.168.1.110:8181/posts/create";
+  const apiUrl = "http://localhost:8001/posts/create";
   const formData = new FormData();
   post.files.forEach((file, index) => {
-    formData.append(`images[${index}]`, file);
+    formData.append(`files`, file);
   });
   formData.append("userName", post.userName);
   formData.append("location", post.location);
@@ -80,6 +80,7 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
       apiUrl,
       formData,
       {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-Type": "multipart/form-data",
@@ -95,7 +96,7 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
 };
 
 export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
-  const apiUrl = "http://192.168.1.110:8181/post/create";
+  const apiUrl = "http://localhost:8181/post/create";
   const formData = new FormData();
   post.files.forEach((file, index) => {
     formData.append(`images[${index}]`, file);
