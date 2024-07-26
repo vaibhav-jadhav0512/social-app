@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.posts.service.model.FileMetadata;
 import com.posts.service.model.Post;
+import com.posts.service.model.dto.PostDto;
 import com.posts.service.service.CloudinaryService;
 import com.posts.service.service.PostService;
 
@@ -66,6 +67,16 @@ public class PostsController {
             return new ResponseEntity<>(post, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/recent")
+	public ResponseEntity<List<PostDto>> getRecentPosts() {
+		List<PostDto> posts = service.getRecentPosts();
+		if (posts != null) {
+			return new ResponseEntity<>(posts, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -13,8 +13,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.posts.service.model.FileMetadata;
+import com.posts.service.model.Files;
+import com.posts.service.model.Likes;
 import com.posts.service.model.Post;
+import com.posts.service.model.dto.PostDto;
 import com.posts.service.repository.rowmapper.FileMapper;
+import com.posts.service.repository.rowmapper.FilesMapper;
+import com.posts.service.repository.rowmapper.LikesMapper;
+import com.posts.service.repository.rowmapper.PostFileMapper;
 import com.posts.service.repository.rowmapper.PostMapper;
 import com.posts.service.repository.sql.PostQueries;
 
@@ -57,6 +63,21 @@ public class PostRepositoryImpl implements PostRepository {
 		List<FileMetadata> files = template.query(PostQueries.GET_FILES_BY_POST_ID, paramMap, new FileMapper());
 		post.setFiles(files);
 		return post;
+	}
+
+	@Override
+	public List<PostDto> getRecentPosts() {
+
+		List<PostDto> list = template.query(PostQueries.GET_RECENT_POSTS, new PostFileMapper());
+		for (PostDto post : list) {
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("postId", post.getId());
+			List<Files> files = template.query(PostQueries.GET_FILES_BY_POSTID, paramMap, new FilesMapper());
+			post.setFiles(files);
+			List<Likes> likes = template.query(PostQueries.GET_LIKES_BY_POSTID, paramMap, new LikesMapper());
+			post.setLikes(likes);
+		}
+		return list;
 	}
 
 }

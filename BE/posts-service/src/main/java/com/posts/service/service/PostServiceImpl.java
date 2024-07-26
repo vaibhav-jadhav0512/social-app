@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.posts.service.model.FileMetadata;
 import com.posts.service.model.Post;
+import com.posts.service.model.dto.PostDto;
 import com.posts.service.repository.PostRepository;
 
 @Service
@@ -28,6 +29,11 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public Post getPostById(int postId) {
 		return repo.getPostById(postId);
+	}
+
+	@Override
+	public List<PostDto> getRecentPosts() {
+		return repo.getRecentPosts();
 	}
 
 }
