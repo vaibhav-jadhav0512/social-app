@@ -11,8 +11,10 @@ import {
   createPost,
   updatePost,
   getRecentPosts,
+  likePost,
+  unLikePost,
 } from "../functions/httpRequests";
-import { INewPost, INewUser, ISignIn, IUpdatePost } from "@/types";
+import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
 export const useCreateUserAccountMutation = () => {
@@ -63,5 +65,47 @@ export const useGetRecentPosts = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
     queryFn: getRecentPosts,
+  });
+};
+
+export const useLikePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ like }: { like: Likes }) => likePost(like),
+    onSuccess: (postId) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
+  });
+};
+
+export const useUnLikePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ like }: { like: Likes }) => unLikePost(like),
+    onSuccess: (postId) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
   });
 };

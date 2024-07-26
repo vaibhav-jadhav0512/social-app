@@ -1,3 +1,4 @@
+import { Likes } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -53,6 +54,6 @@ export const multiFormatDateString = (timestamp: string = ""): string => {
   }
 };
 
-export const checkIsLiked = (likeList: string[], userId: string) => {
-  return likeList.includes(userId);
+export const checkIsLiked = (likeList: Likes[], userName: string): boolean => {
+  return likeList.some((like) => like.userName === userName);
 };

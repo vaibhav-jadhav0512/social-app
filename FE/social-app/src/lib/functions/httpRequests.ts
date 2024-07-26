@@ -4,12 +4,12 @@ import {
   ISignIn,
   IUpdatePost,
   IUser,
+  Likes,
   PostType,
 } from "@/types";
-import { SignUpResponse, UserSignUpData } from "./userTypes";
+import { SignUpResponse } from "./userTypes";
 
 import axios, { AxiosResponse } from "axios";
-import { useUserContext } from "@/context/AuthContext";
 
 export const signUpUser = async (
   userData: INewUser
@@ -140,6 +140,44 @@ export const getRecentPosts = async (): Promise<PostType[]> => {
       },
     });
     console.log("User:", response.data);
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const likePost = async (like: Likes): Promise<number> => {
+  const apiUrl = "http://192.168.1.110:8181/likes/like";
+  try {
+    const response: AxiosResponse<number> = await axios.post(
+      `${apiUrl}/${like.userName}/${like.postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log("Like:", response.data);
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const unLikePost = async (like: Likes): Promise<number> => {
+  const apiUrl = "http://192.168.1.110:8181/likes/unlike";
+  try {
+    const response: AxiosResponse<number> = await axios.delete(
+      `${apiUrl}/${like.userName}/${like.postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log("UnLike:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
