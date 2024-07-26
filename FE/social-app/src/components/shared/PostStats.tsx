@@ -25,50 +25,33 @@ const PostStats = ({ post, userName }: PostStatProps) => {
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    let likesArray = [...likes];
-    const userIndex = likesArray.findIndex(
+    if (post?.id === undefined) {
+      console.error("Post ID is undefined. Cannot process likes.");
+      return;
+    }
+
+    const like: Likes = {
+      id: 0,
+      userName: userName,
+      postId: post.id,
+    };
+
+    let updatedLikes = [...likes];
+    const userIndex = updatedLikes.findIndex(
       (user) => user.userName === userName
     );
 
     if (userIndex !== -1) {
-      if (post?.id === undefined) {
-        console.error("Post ID is undefined. Cannot add to likes.");
-        return;
-      }
-
-      const unlike: Likes = {
-        id: 0, // Replace with the actual id value or generate one
-        userName: userName, // Ensure userName is defined
-        postId: post.id, // Ensure post.id is defined
-      };
-
-      likesArray.splice(userIndex, 1);
-
-      // Wrap the unlike object in an object with a `like` property
-      unLikePost({ like: unlike });
+      updatedLikes.splice(userIndex, 1);
+      unLikePost({ like });
     } else {
-      if (post?.id === undefined) {
-        console.error("Post ID is undefined. Cannot add to likes.");
-        return;
-      }
-      const like: {
-        id: number;
-        userName: string;
-        postId: number;
-      } = {
-        id: 0,
-        userName: userName,
-        postId: post.id,
-      };
-
-      likesArray.push(like);
+      updatedLikes.push(like);
       likePost({ like });
     }
 
-    setLikes(likesArray); // Update the state with the new likes array
-    console.log(likesArray); // Log
+    setLikes(updatedLikes);
+    console.log(updatedLikes); // Log the updated array
   };
-
   return (
     <div
       className={`flex justify-between items-center z-20 ${containerStyles}`}
