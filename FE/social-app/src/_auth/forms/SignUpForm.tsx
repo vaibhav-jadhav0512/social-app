@@ -35,7 +35,6 @@ const SignUpForm = () => {
     },
   });
   const handleSignup = async (values: z.infer<typeof SignupValidation>) => {
-    console.log(values);
     await createUserAccount(values)
       .then((data) => {
         toast({

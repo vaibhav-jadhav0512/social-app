@@ -20,7 +20,6 @@ export const signUpUser = async (
       apiUrl,
       userData
     );
-    console.log("Sign-up successful:", response.data);
     localStorage.setItem("token", response.data.access_token);
     return response.data;
   } catch (error: unknown) {
@@ -45,7 +44,6 @@ export const signInUser = async (
       }
     );
     localStorage.setItem("token", response.data.access_token);
-    console.log("Sign-in successful:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -61,7 +59,6 @@ export const getCurrentUser = async (): Promise<IUser> => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("User:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -94,7 +91,6 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
         },
       }
     );
-    console.log("User:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -123,7 +119,6 @@ export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
         },
       }
     );
-    console.log("User:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -139,7 +134,6 @@ export const getRecentPosts = async (): Promise<PostType[]> => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("User:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -152,13 +146,13 @@ export const likePost = async (like: Likes): Promise<number> => {
   try {
     const response: AxiosResponse<number> = await axios.post(
       `${apiUrl}/${like.userName}/${like.postId}`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     );
-    console.log("Like:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -177,7 +171,6 @@ export const unLikePost = async (like: Likes): Promise<number> => {
         },
       }
     );
-    console.log("UnLike:", response.data);
     return response.data;
   } catch (error: unknown) {
     console.log(error);

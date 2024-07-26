@@ -29,18 +29,15 @@ const PostStats = ({ post, userName }: PostStatProps) => {
       console.error("Post ID is undefined. Cannot process likes.");
       return;
     }
-
     const like: Likes = {
       id: 0,
       userName: userName,
       postId: post.id,
     };
-
     let updatedLikes = [...likes];
     const userIndex = updatedLikes.findIndex(
       (user) => user.userName === userName
     );
-
     if (userIndex !== -1) {
       updatedLikes.splice(userIndex, 1);
       unLikePost({ like });
@@ -48,9 +45,7 @@ const PostStats = ({ post, userName }: PostStatProps) => {
       updatedLikes.push(like);
       likePost({ like });
     }
-
     setLikes(updatedLikes);
-    console.log(updatedLikes); // Log the updated array
   };
   return (
     <div
