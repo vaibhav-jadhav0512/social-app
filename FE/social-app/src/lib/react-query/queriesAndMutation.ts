@@ -10,6 +10,7 @@ import {
   signOutAccount,
   createPost,
   updatePost,
+  getRecentPosts,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -55,5 +56,12 @@ export const useUpdatePost = () => {
         queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.postId],
       });
     },
+  });
+};
+
+export const useGetRecentPosts = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+    queryFn: getRecentPosts,
   });
 };

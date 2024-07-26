@@ -46,9 +46,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
   const { mutateAsync: CreatePost } = useCreatePost();
   async function onSubmit(values: z.infer<typeof PostValidation>) {
     setLoading(true);
-    const newPost = await CreatePost({ ...values, userName: user.userName });
-    if (!newPost) toast({ title: "Please try again" });
-    setLoading(false);
+    await CreatePost({ ...values, userName: user.userName });
+    toast({
+      title: "Post created successfully",
+    });
     navigate("/");
   }
   return (

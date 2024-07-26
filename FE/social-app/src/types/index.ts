@@ -77,3 +77,18 @@ export type IPostType = {
   tags: string;
   imageUrl: string;
 };
+
+export type PostType = {
+  id: number;
+  userName: string;
+  caption: string;
+  location: string;
+  tags: string;
+  createdAt: string;
+  files: Files[];
+};
+
+export type Files = {
+  id: number;
+  imageUrl: string;
+};
