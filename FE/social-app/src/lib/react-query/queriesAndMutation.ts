@@ -13,6 +13,7 @@ import {
   getRecentPosts,
   likePost,
   unLikePost,
+  getCurrentUser,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -107,5 +108,11 @@ export const useUnLikePost = () => {
         queryKey: [QUERY_KEYS.GET_CURRENT_USER],
       });
     },
+  });
+};
+export const useGetCurrentUser = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: getCurrentUser,
   });
 };

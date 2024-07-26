@@ -1,10 +1,11 @@
 import {
+  useGetCurrentUser,
   useLikePost,
   useUnLikePost,
 } from "@/lib/react-query/queriesAndMutation";
 import { checkIsLiked } from "@/lib/utils";
 import { Likes, PostType } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 type PostStatProps = {
@@ -20,7 +21,13 @@ const PostStats = ({ post, userName }: PostStatProps) => {
   const [isSaved, setIsSaved] = useState(false);
   const { mutate: likePost } = useLikePost();
   const { mutate: unLikePost } = useUnLikePost();
-
+  const { data: currentUser } = useGetCurrentUser();
+  const savedPostRecord = currentUser?.saved.find(
+    (record: Models.Document) => record.post.$id === post.id
+  );
+  useEffect(() => {
+    setIsSaved(!!savedPostRecord);
+  }, [currentUser]);
   const handleLikePost = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
@@ -46,6 +53,19 @@ const PostStats = ({ post, userName }: PostStatProps) => {
       likePost({ like });
     }
     setLikes(updatedLikes);
+  };
+  const handleSavePost = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+
+    if (savedPostRecord) {
+      setIsSaved(false);
+      return deleteSavePost(savedPostRecord.$id);
+    }
+
+    savePost({ userName: userName, postId: post?.id });
+    setIsSaved(true);
   };
   return (
     <div
@@ -74,6 +94,7 @@ const PostStats = ({ post, userName }: PostStatProps) => {
           width={20}
           height={20}
           className="cursor-pointer"
+          onClick={(e) => handleSavePost(e)}
         />
       </div>
     </div>

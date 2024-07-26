@@ -13,7 +13,7 @@ spring:
         - id: posts-service
           uri: lb://posts-service
           predicates:
-            - Path=/posts/**,/likes/**
+            - Path=/posts/**, /likes/**, /saver/**
           filters:
             - AuthenticationFilter
       discovery:
