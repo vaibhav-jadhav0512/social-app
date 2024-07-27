@@ -32,7 +32,7 @@ const App = () => {
           <Route path="/saved" element={<Saved />} />
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/update-post/:userName" element={<EditPost />} />
+          <Route path="/update-post/:id" element={<EditPost />} />
           <Route path="/posts/:userName" element={<PostDetails />} />
           <Route path="/profile/:userName/*" element={<Profile />} />
           <Route path="/update-profile/:userName" element={<UpdateProfile />} />

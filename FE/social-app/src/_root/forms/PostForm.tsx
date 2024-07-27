@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,14 +16,14 @@ import FileUploader from "@/components/shared/FileUploader";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/shared/Loader";
 import { PostValidation } from "@/lib/validation";
-import { IPostType } from "@/types";
+import { PostType } from "@/types";
 import { useCreatePost } from "@/lib/react-query/queriesAndMutation";
 import { useUserContext } from "@/context/AuthContext";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 type PostFormProps = {
-  post?: IPostType;
+  post?: PostType;
   action: "Create" | "Update";
 };
 

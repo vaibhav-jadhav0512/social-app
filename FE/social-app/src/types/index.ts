@@ -87,6 +87,7 @@ export type PostType = {
   createdAt: string;
   files: Files[];
   likes: Likes[];
+  imageUrl: string;
 };
 export type Likes = {
   id: number;

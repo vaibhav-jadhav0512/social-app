@@ -60,7 +60,7 @@ public class PostsController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{postId}")
+	@GetMapping("/get/{postId}")
 	public ResponseEntity<Post> getPostById(@PathVariable("postId") int postId) {
         Post post = service.getPostById(postId);
         if (post != null) {

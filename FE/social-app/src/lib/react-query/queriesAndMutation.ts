@@ -14,6 +14,10 @@ import {
   likePost,
   unLikePost,
   getCurrentUser,
+  getSavedPosts,
+  savePost,
+  unSavePost,
+  getPostById,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -114,5 +118,82 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
+  });
+};
+
+export const useGetSavedPosts = () => {
+  const { data: currentUser } = useGetCurrentUser();
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_SAVED_POSTS, currentUser?.userName],
+    queryFn: () =>
+      currentUser
+        ? getSavedPosts(currentUser.userName)
+        : Promise.reject("User not logged in"),
+  });
+};
+export const useSavePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      userName,
+      postId,
+    }: {
+      userName: string;
+      postId: number;
+    }) => {
+      return savePost(userName, postId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
+  });
+};
+
+export const useUnSavePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({
+      userName,
+      postId,
+    }: {
+      userName: string;
+      postId: number;
+    }) => {
+      return unSavePost(userName, postId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+    },
+  });
+};
+
+export const useGetPostById = (postId?: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+    queryFn: () => {
+      if (postId === undefined) {
+        return Promise.reject(new Error("postId is undefined"));
+      }
+      return getPostById(postId);
+    },
+    enabled: !!postId,
   });
 };
