@@ -92,4 +92,10 @@ public class PostRepositoryImpl implements PostRepository {
 		template.update(PostQueries.UPDATE_POST, paramMap);
 	}
 
+	@Override
+	public void deleteFiles(int postId) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("postId", postId);
+		template.update(PostQueries.DELETE_FILES, paramMap);
+	}
 }

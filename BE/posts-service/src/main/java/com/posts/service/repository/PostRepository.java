@@ -18,4 +18,6 @@ public interface PostRepository {
 
 	void updatePost(Post post);
 
+	void deleteFiles(int postId);
+
 }

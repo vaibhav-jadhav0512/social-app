@@ -65,13 +65,14 @@ public class PostsController {
 	public ResponseEntity<Integer> updateFiles(@RequestParam("postId") int postId,
 			@RequestParam("caption") String caption,
 			@RequestParam("location") String location, @RequestParam("tags") String tags,
-			@RequestParam("files") MultipartFile[] files) {
+			@RequestParam(value = "files", required = false) MultipartFile[] files) {
 		Post post = new Post();
 		post.setPostId(postId);
 		post.setCaption(caption);
 		post.setLocation(location);
 		post.setTags(tags);
 		service.updatePost(post);
+		System.out.println(post.toString());
 		if (files != null) {
 			List<FileMetadata> fileMetadataList = new ArrayList<>();
 			for (MultipartFile file : files) {
@@ -85,6 +86,8 @@ public class PostsController {
 					e.printStackTrace();
 				}
 			}
+			System.out.println(fileMetadataList.toString());
+			service.deleteFiles(postId);
 			service.insertFiles(fileMetadataList);
 		}
 		return new ResponseEntity<>(postId, HttpStatus.CREATED);

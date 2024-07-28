@@ -13,7 +13,7 @@ public class PostQueries {
 			+ "FROM auth.files WHERE post_id=:postId";
 	public static final String GET_RECENT_POSTS = "SELECT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at, "
 			+ "f.id AS file_id, f.url AS file_url, f.post_id " + "FROM auth.posts p "
-			+ "LEFT JOIN auth.files f ON p.id = f.post_id " + "ORDER BY p.created_at DESC  LIMIT 20";
+			+ "LEFT JOIN auth.files f ON p.id = f.post_id " + "ORDER BY p.updated_at DESC  LIMIT 20";
 	public static final String GET_FILES_BY_POSTID = "SELECT id, url " + "FROM auth.files WHERE post_id=:postId";
 	public static final String LIKE_POST = "INSERT INTO auth.likes " + "(id, user_name, post_id) "
 			+ "VALUES(nextval('auth.likes_id_seq'::regclass), :userName, :postId);";
@@ -27,5 +27,6 @@ public class PostQueries {
 	public static final String GET_SAVED_POSTS_BY_USER_NAME = "SELECT id, user_name, post_id "
 			+ "FROM auth.saved WHERE user_name=:userName";
 	public static final String UPDATE_POST = "UPDATE auth.posts SET "
-			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=:CURRENT_TIMESTAMP WHERE id=:postId";
+			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=CURRENT_TIMESTAMP WHERE id=:postId";
+	public static final String DELETE_FILES = "DELETE FROM auth.files WHERE post_id=:postId";
 }

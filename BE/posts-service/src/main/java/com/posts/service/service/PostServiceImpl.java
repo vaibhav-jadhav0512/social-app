@@ -41,4 +41,9 @@ public class PostServiceImpl implements PostService {
 		repo.updatePost(post);
 	}
 
+	@Override
+	public void deleteFiles(int postId) {
+		repo.deleteFiles(postId);
+	}
+
 }
