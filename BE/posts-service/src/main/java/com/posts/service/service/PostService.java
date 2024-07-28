@@ -17,4 +17,6 @@ public interface PostService {
 	List<PostDto> getRecentPosts();
 
 	void updatePost(Post post);
+
+	List<PostDto> getUserPosts(String userName);
 }

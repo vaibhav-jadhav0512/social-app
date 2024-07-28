@@ -28,4 +28,7 @@ public class PostQueries {
 			+ "FROM auth.saved WHERE user_name=:userName";
 	public static final String UPDATE_POST = "UPDATE auth.posts SET "
 			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=:CURRENT_TIMESTAMP WHERE id=:postId";
+	public static final String GET_USER_POSTS = "SELECT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at, "
+			+ "f.id AS file_id, f.url AS file_url, f.post_id " + "FROM auth.posts p "
+			+ "LEFT JOIN auth.files f ON p.id = f.post_id AND p.user_name=:userName" + "ORDER BY p.created_at DESC";
 }

@@ -41,4 +41,9 @@ public class PostServiceImpl implements PostService {
 		repo.updatePost(post);
 	}
 
+	@Override
+	public List<PostDto> getUserPosts(String userName) {
+		return repo.getUserPosts(userName);
+	}
+
 }

@@ -18,4 +18,6 @@ public interface PostRepository {
 
 	void updatePost(Post post);
 
+	List<PostDto> getUserPosts(String userName);
+
 }

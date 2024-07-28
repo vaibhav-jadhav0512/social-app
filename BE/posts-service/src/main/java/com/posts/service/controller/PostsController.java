@@ -109,4 +109,14 @@ public class PostsController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@GetMapping("/user/{userName}")
+	public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("userName") String userName) {
+		List<PostDto> posts = service.getUserPosts(userName);
+		if (posts != null) {
+			return new ResponseEntity<>(posts, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
