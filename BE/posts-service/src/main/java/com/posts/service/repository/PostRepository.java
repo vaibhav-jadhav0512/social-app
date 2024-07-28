@@ -16,4 +16,6 @@ public interface PostRepository {
 
 	List<PostDto> getRecentPosts();
 
+	void updatePost(Post post);
+
 }

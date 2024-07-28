@@ -36,4 +36,9 @@ public class PostServiceImpl implements PostService {
 		return repo.getRecentPosts();
 	}
 
+	@Override
+	public void updatePost(Post post) {
+		repo.updatePost(post);
+	}
+
 }

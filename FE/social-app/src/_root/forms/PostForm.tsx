@@ -17,7 +17,10 @@ import { useNavigate } from "react-router-dom";
 import Loader from "@/components/shared/Loader";
 import { PostValidation } from "@/lib/validation";
 import { PostType } from "@/types";
-import { useCreatePost } from "@/lib/react-query/queriesAndMutation";
+import {
+  useCreatePost,
+  useUpdatePost,
+} from "@/lib/react-query/queriesAndMutation";
 import { useUserContext } from "@/context/AuthContext";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
@@ -43,8 +46,20 @@ const PostForm = ({ post, action }: PostFormProps) => {
     },
   });
   const { mutateAsync: CreatePost } = useCreatePost();
+  const { mutateAsync: UpdatePost } = useUpdatePost();
+
   async function onSubmit(values: z.infer<typeof PostValidation>) {
     setLoading(true);
+    if (post && action === "Update") {
+      await UpdatePost({
+        ...values,
+        postId: post.id,
+      });
+      toast({
+        title: "Post updated successfully",
+      });
+      return navigate(`/posts/${post.id}`);
+    }
     await CreatePost({ ...values, userName: user.userName });
     toast({
       title: "Post created successfully",
@@ -133,10 +148,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={false}
+            disabled={isLoading}
           >
             {isLoading && <Loader />}
-            Post
+            {action} Post
           </Button>
         </div>
       </form>

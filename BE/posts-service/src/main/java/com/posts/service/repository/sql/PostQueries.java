@@ -26,4 +26,6 @@ public class PostQueries {
 	public static final String UNSAVE_POST = "DELETE FROM auth.saved WHERE user_name=:userName AND post_id=:postId";
 	public static final String GET_SAVED_POSTS_BY_USER_NAME = "SELECT id, user_name, post_id "
 			+ "FROM auth.saved WHERE user_name=:userName";
+	public static final String UPDATE_POST = "UPDATE auth.posts SET "
+			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=:CURRENT_TIMESTAMP WHERE id=:postId";
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,35 @@ public class PostsController {
 		}
 		service.insertFiles(fileMetadataList);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@PutMapping("/update")
+	public ResponseEntity<Integer> updateFiles(@RequestParam("postId") int postId,
+			@RequestParam("caption") String caption,
+			@RequestParam("location") String location, @RequestParam("tags") String tags,
+			@RequestParam("files") MultipartFile[] files) {
+		Post post = new Post();
+		post.setPostId(postId);
+		post.setCaption(caption);
+		post.setLocation(location);
+		post.setTags(tags);
+		service.updatePost(post);
+		if (files != null) {
+			List<FileMetadata> fileMetadataList = new ArrayList<>();
+			for (MultipartFile file : files) {
+				try {
+					Map upload = cloudinaryService.upload(file);
+					FileMetadata fileMetadata = new FileMetadata();
+					fileMetadata.setUrl(upload.get("secure_url").toString());
+					fileMetadata.setPostId(postId);
+					fileMetadataList.add(fileMetadata);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			service.insertFiles(fileMetadataList);
+		}
+		return new ResponseEntity<>(postId, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get/{postId}")

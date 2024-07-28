@@ -99,17 +99,17 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
 };
 
 export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
-  const apiUrl = "http://192.168.1.110:8181/post/create";
+  const apiUrl = "http://192.168.1.110:8181/posts/update";
   const formData = new FormData();
-  post.files.forEach((file, index) => {
+  post.files?.forEach((file, index) => {
     formData.append(`images[${index}]`, file);
   });
-  formData.append("postId", post.postId);
+  formData.append("postId", post?.postId.toString());
   formData.append("location", post.location);
   formData.append("tags", post.tags);
   formData.append("caption", post.caption);
   try {
-    const response: AxiosResponse<IUpdatePost> = await axios.post(
+    const response: AxiosResponse<IUpdatePost> = await axios.put(
       apiUrl,
       formData,
       {
