@@ -100,7 +100,9 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	public List<PostDto> getUserPosts(String userName) {
-		List<PostDto> list = template.query(PostQueries.GET_USER_POSTS, new PostFileMapper());
+		Map<String, Object> paramMaps = new HashMap<>();
+		paramMaps.put("userName", userName);
+		List<PostDto> list = template.query(PostQueries.GET_USER_POSTS, paramMaps, new PostFileMapper());
 		for (PostDto post : list) {
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("postId", post.getPostId());
