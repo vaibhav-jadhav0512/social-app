@@ -98,4 +98,18 @@ public class PostRepositoryImpl implements PostRepository {
 		paramMap.put("postId", postId);
 		template.update(PostQueries.DELETE_FILES, paramMap);
 	}
+
+	public List<PostDto> getUserPosts(String userName) {
+		List<PostDto> list = template.query(PostQueries.GET_USER_POSTS, new PostFileMapper());
+		for (PostDto post : list) {
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("postId", post.getPostId());
+			List<Files> files = template.query(PostQueries.GET_FILES_BY_POSTID, paramMap, new FilesMapper());
+			post.setFiles(files);
+			List<Likes> likes = template.query(PostQueries.GET_LIKES_BY_POSTID, paramMap, new LikesMapper());
+			post.setLikes(likes);
+		}
+		return list;
+	}
+
 }

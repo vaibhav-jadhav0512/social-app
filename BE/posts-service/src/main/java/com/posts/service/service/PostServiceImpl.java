@@ -46,4 +46,9 @@ public class PostServiceImpl implements PostService {
 		repo.deleteFiles(postId);
 	}
 
+	@Override
+	public List<PostDto> getUserPosts(String userName) {
+		return repo.getUserPosts(userName);
+	}
+
 }

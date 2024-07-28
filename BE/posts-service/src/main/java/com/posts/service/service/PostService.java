@@ -19,4 +19,6 @@ public interface PostService {
 	void updatePost(Post post);
 
 	void deleteFiles(int postId);
+
+	List<PostDto> getUserPosts(String userName);
 }

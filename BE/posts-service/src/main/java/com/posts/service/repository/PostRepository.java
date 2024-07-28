@@ -20,4 +20,6 @@ public interface PostRepository {
 
 	void deleteFiles(int postId);
 
+	List<PostDto> getUserPosts(String userName);
+
 }
