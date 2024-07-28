@@ -78,7 +78,6 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
   formData.append("location", post.location);
   formData.append("tags", post.tags);
   formData.append("caption", post.caption);
-  console.log(post);
   try {
     const response: AxiosResponse<INewPost> = await axios.post(
       apiUrl,
@@ -101,8 +100,8 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
 export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
   const apiUrl = "http://192.168.1.110:8181/posts/update";
   const formData = new FormData();
-  post.files?.forEach((file, index) => {
-    formData.append(`images[${index}]`, file);
+  post.files.forEach((file, index) => {
+    formData.append(`files`, file);
   });
   formData.append("postId", post?.postId.toString());
   formData.append("location", post.location);
@@ -242,6 +241,24 @@ export const getPostById = async (postId: number): Promise<PostType> => {
   try {
     const response: AxiosResponse<PostType> = await axios.get(
       `${apiUrl}/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserPosts = async (userName: string): Promise<PostType[]> => {
+  const apiUrl = "http://192.168.1.110:8181/posts/user";
+  try {
+    const response: AxiosResponse<PostType[]> = await axios.get(
+      `${apiUrl}/${userName}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

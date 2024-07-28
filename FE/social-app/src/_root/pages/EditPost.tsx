@@ -9,7 +9,6 @@ const EditPost = () => {
   const numericId = id ? Number(id) : undefined;
 
   const { data: post, isLoading } = useGetPostById(numericId);
-  console.log(post);
   if (isLoading)
     return (
       <div className="flex-center w-full h-full">

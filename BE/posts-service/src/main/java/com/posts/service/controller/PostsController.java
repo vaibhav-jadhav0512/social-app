@@ -94,8 +94,8 @@ public class PostsController {
 	}
 
 	@GetMapping("/get/{postId}")
-	public ResponseEntity<Post> getPostById(@PathVariable("postId") int postId) {
-        Post post = service.getPostById(postId);
+	public ResponseEntity<PostDto> getPostById(@PathVariable("postId") int postId) {
+		PostDto post = service.getPostById(postId);
         if (post != null) {
             return new ResponseEntity<>(post, HttpStatus.OK);
         } else {

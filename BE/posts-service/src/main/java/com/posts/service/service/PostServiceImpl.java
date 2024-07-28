@@ -27,7 +27,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public Post getPostById(int postId) {
+	public PostDto getPostById(int postId) {
 		return repo.getPostById(postId);
 	}
 
