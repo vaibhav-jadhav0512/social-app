@@ -44,7 +44,7 @@ public class SaveRepositoryImpl implements SaveRepository {
 		paramMap.put("userName", userName);
 		List<PostDto> list = template.query(PostQueries.GET_SAVED_POSTS_BY_USER_NAME, paramMap, new PostSaveMapper());
 		for (PostDto post : list) {
-			paramMap.put("postId", post.getId());
+			paramMap.put("postId", post.getPostId());
 			List<Files> files = template.query(PostQueries.GET_FILES_BY_POSTID, paramMap, new FilesMapper());
 			post.setFiles(files);
 			List<Likes> likes = template.query(PostQueries.GET_LIKES_BY_POSTID, paramMap, new LikesMapper());

@@ -16,7 +16,7 @@ const Home = () => {
           ) : (
             <ul className="flex flex-col flex-1 gap-9 w-full ">
               {posts?.map((post: PostType) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard key={post.postId} post={post} />
               ))}
             </ul>
           )}

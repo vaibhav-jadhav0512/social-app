@@ -12,7 +12,7 @@ public class PostFileMapper implements RowMapper<PostDto> {
 	@Override
     public PostDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         PostDto postDto = new PostDto();
-		postDto.setId(rs.getInt("id"));
+		postDto.setPostId(rs.getInt("id"));
         postDto.setUserName(rs.getString("user_name"));
         postDto.setCaption(rs.getString("caption"));
         postDto.setLocation(rs.getString("location"));

@@ -38,34 +38,41 @@ const PostForm = ({ post, action }: PostFormProps) => {
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
     defaultValues: {
-      caption: post ? post?.caption : "",
+      caption: post?.caption || "",
       files: [],
-      location: post ? post.location : "",
-      tags: post ? post.tags : "",
-      imageUrl: post ? post.imageUrl : "",
+      location: post?.location || "",
+      tags: post?.tags || "",
+      imageUrl: post?.imageUrl || "",
     },
   });
   const { mutateAsync: CreatePost } = useCreatePost();
   const { mutateAsync: UpdatePost } = useUpdatePost();
 
-  async function onSubmit(values: z.infer<typeof PostValidation>) {
+  const onSubmit = async (values: z.infer<typeof PostValidation>) => {
+    console.log("Submitting:", post?.postId);
     setLoading(true);
-    if (post && action === "Update") {
-      await UpdatePost({
-        ...values,
-        postId: post.id,
-      });
+    try {
+      if (post && action === "Update") {
+        await UpdatePost({ ...values, postId: post.postId });
+        toast({ title: "Post updated successfully" });
+        navigate(`/posts/${post.postId}`);
+      } else {
+        await CreatePost({ ...values, userName: user.userName });
+        toast({ title: "Post created successfully" });
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error:", error);
       toast({
-        title: "Post updated successfully",
+        title: "An error occurred",
+        description: "Please try again later.",
+        variant: "destructive",
       });
-      return navigate(`/posts/${post.id}`);
+    } finally {
+      setLoading(false);
     }
-    await CreatePost({ ...values, userName: user.userName });
-    toast({
-      title: "Post created successfully",
-    });
-    navigate("/");
-  }
+  };
+
   return (
     <Form {...form}>
       <form
@@ -96,8 +103,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
               <FormLabel className="shad-form_label">Add Photos</FormLabel>
               <FormControl>
                 <FileUploader
-                  fieldChange={field.onChange}
-                  mediaUrl={post?.imageUrl!}
+                  fieldChange={(files) => field.onChange(files)}
+                  mediaUrl={post?.imageUrl || ""}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
@@ -148,7 +155,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
           <Button
             type="submit"
             className="shad-button_primary whitespace-nowrap"
-            disabled={isLoading}
           >
             {isLoading && <Loader />}
             {action} Post

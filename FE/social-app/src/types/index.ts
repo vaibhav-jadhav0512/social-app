@@ -77,7 +77,7 @@ export type IPostType = {
 };
 
 export type PostType = {
-  id: number;
+  postId: number;
   userName: string;
   caption: string;
   location: string;

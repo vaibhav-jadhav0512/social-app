@@ -12,7 +12,7 @@ public class PostSaveMapper implements RowMapper<PostDto> {
 	@Override
 	public PostDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		PostDto postDto = new PostDto();
-		postDto.setId(rs.getInt("post_id"));
+		postDto.setPostId(rs.getInt("post_id"));
 		postDto.setUserName(rs.getString("user_name"));
 		return postDto;
 	}

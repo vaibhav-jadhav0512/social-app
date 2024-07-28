@@ -38,23 +38,25 @@ const PostStats = ({ post, userName }: PostStatProps) => {
 
   useEffect(() => {
     if (currentUser) {
-      const savedPostRecord = savedPosts?.some((item) => item.id === post?.id);
+      const savedPostRecord = savedPosts?.some(
+        (item) => item.postId === post?.postId
+      );
       setIsSaved(!!savedPostRecord);
     }
-  }, [currentUser, savedPosts, post?.id]);
+  }, [currentUser, savedPosts, post?.postId]);
 
   const handleLikePost = async (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    if (!post?.id) {
+    if (!post?.postId) {
       console.error("Post ID is undefined. Cannot process likes.");
       return;
     }
     const like: Likes = {
       id: 0,
       userName,
-      postId: post.id,
+      postId: post.postId,
     };
     let updatedLikes = [...likes];
     const userIndex = updatedLikes.findIndex(
@@ -74,15 +76,15 @@ const PostStats = ({ post, userName }: PostStatProps) => {
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    if (!post?.id) {
+    if (!post?.postId) {
       console.error("Post ID is undefined");
       return;
     }
     if (isSaved) {
-      await unSavePost({ userName, postId: post.id });
+      await unSavePost({ userName, postId: post.postId });
       setIsSaved(false);
     } else {
-      await savePost({ userName, postId: post.id });
+      await savePost({ userName, postId: post.postId });
       setIsSaved(true);
     }
   };

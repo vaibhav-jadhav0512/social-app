@@ -40,7 +40,7 @@ const PostCard = ({ post }: PostProps) => {
         </div>
 
         <Link
-          to={`/update-post/${post?.id}`}
+          to={`/update-post/${post?.postId}`}
           className={`${user?.userName !== post?.userName && "hidden"}`}
         >
           <img
@@ -52,7 +52,7 @@ const PostCard = ({ post }: PostProps) => {
         </Link>
       </div>
 
-      <Link to={`/posts/${post?.id}`}>
+      <Link to={`/posts/${post?.postId}`}>
         <div className="small-medium lg:base-medium py-5">
           <p>{post?.caption}</p>
           <ul className="flex gap-1 mt-2">
