@@ -18,6 +18,7 @@ import {
   savePost,
   unSavePost,
   getPostById,
+  getUserPosts,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -60,7 +61,7 @@ export const useUpdatePost = () => {
     mutationFn: (post: IUpdatePost) => updatePost(post),
     onSuccess: (data: IUpdatePost) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.postId],
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data],
       });
     },
   });
@@ -195,5 +196,18 @@ export const useGetPostById = (postId?: number) => {
       return getPostById(postId);
     },
     enabled: !!postId,
+  });
+};
+
+export const useGetUserPosts = (userName?: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_POSTS, userName],
+    queryFn: () => {
+      if (userName === undefined) {
+        return Promise.reject(new Error("userName is undefined"));
+      }
+      return getUserPosts(userName);
+    },
+    enabled: !!userName,
   });
 };

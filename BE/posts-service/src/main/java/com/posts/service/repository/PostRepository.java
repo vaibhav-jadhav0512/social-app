@@ -12,7 +12,7 @@ public interface PostRepository {
 
 	void insertFiles(List<FileMetadata> fileMetadataList);
 
-	Post getPostById(int postId);
+	PostDto getPostById(int postId);
 
 	List<PostDto> getRecentPosts();
 

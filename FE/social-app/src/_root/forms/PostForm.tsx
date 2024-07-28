@@ -49,7 +49,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
   const { mutateAsync: UpdatePost } = useUpdatePost();
 
   const onSubmit = async (values: z.infer<typeof PostValidation>) => {
-    console.log("Submitting:", post?.postId);
     setLoading(true);
     try {
       if (post && action === "Update") {
@@ -104,7 +103,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
               <FormControl>
                 <FileUploader
                   fieldChange={(files) => field.onChange(files)}
-                  mediaUrl={post?.imageUrl || ""}
+                  mediaUrl={post?.files[0].url || ""}
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />

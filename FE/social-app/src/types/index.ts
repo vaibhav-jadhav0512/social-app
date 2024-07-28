@@ -95,5 +95,6 @@ export type Likes = {
 
 export type Files = {
   id: number;
+  url: string;
   imageUrl: string;
 };
