@@ -21,4 +21,6 @@ public interface PostService {
 	void deleteFiles(int postId);
 
 	List<PostDto> getUserPosts(String userName);
+
+	void deletePostById(int postId);
 }

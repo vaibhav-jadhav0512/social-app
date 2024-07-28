@@ -28,8 +28,6 @@ const PostDetails = () => {
     // deletePost({ postId: id, imageId: post?.imageId });
     navigate(-1);
   };
-  console.log(userPosts);
-
   return (
     <div className="post_details-container">
       <div className="hidden md:flex max-w-5xl w-full">
@@ -53,7 +51,7 @@ const PostDetails = () => {
       ) : (
         <div className="post_details-card">
           <img
-            src={post?.files[0].url}
+            src={post?.files[0].imageUrl}
             alt="creator"
             className="post_details-img"
           />

@@ -114,4 +114,12 @@ public class PostRepositoryImpl implements PostRepository {
 		return list;
 	}
 
+	@Override
+	public void deletePostById(int postId) {
+		Map<String, Object> paramMaps = new HashMap<>();
+		paramMaps.put("postId", postId);
+		template.update(PostQueries.DELETE_POST_BY_ID, paramMaps);
+
+	}
+
 }
