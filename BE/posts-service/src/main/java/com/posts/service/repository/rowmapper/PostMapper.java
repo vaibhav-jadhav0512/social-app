@@ -11,6 +11,7 @@ public class PostMapper implements RowMapper<Post> {
     @Override
     public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
         Post post = new Post();
+		post.setPostId(rs.getInt("id"));
         post.setUserName(rs.getString("user_name"));
         post.setCaption(rs.getString("caption"));
         post.setLocation(rs.getString("location"));
