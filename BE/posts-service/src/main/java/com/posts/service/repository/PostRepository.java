@@ -22,4 +22,6 @@ public interface PostRepository {
 
 	List<PostDto> getUserPosts(String userName);
 
+	void deletePostById(int postId);
+
 }
