@@ -271,3 +271,21 @@ export const getUserPosts = async (userName: string): Promise<PostType[]> => {
     throw error;
   }
 };
+
+export const deletePost = async (postId: number): Promise<VoidFunction> => {
+  const apiUrl = "http://192.168.1.110:8181/posts/delete";
+  try {
+    const response: AxiosResponse<VoidFunction> = await axios.delete(
+      `${apiUrl}/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};

@@ -19,6 +19,7 @@ import {
   unSavePost,
   getPostById,
   getUserPosts,
+  deletePost,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -209,5 +210,21 @@ export const useGetUserPosts = (userName?: string) => {
       return getUserPosts(userName);
     },
     enabled: !!userName,
+  });
+};
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId }: { postId?: number }) => {
+      if (postId === undefined) {
+        return Promise.reject(new Error("postId is undefined"));
+      }
+      return deletePost(postId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
   });
 };
