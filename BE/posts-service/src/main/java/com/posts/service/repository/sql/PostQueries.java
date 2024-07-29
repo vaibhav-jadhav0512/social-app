@@ -33,4 +33,7 @@ public class PostQueries {
 			+ "f.id AS file_id, f.url AS file_url, f.post_id " + "FROM auth.posts p "
 			+ "LEFT JOIN auth.files f ON p.id = f.post_id AND p.user_name=:userName " + "ORDER BY p.updated_at DESC";
 	public static final String DELETE_POST_BY_ID = "DELETE FROM auth.posts WHERE id=:postId";
+	public static final String EXPLORE = "SELECT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at, "
+			+ "f.id AS file_id, f.url AS file_url, f.post_id " + "FROM auth.posts p "
+			+ "LEFT JOIN auth.files f ON p.id = f.post_id " + "ORDER BY p.updated_at DESC LIMIT 10 OFFSET :page";;
 }

@@ -56,4 +56,9 @@ public class PostServiceImpl implements PostService {
 		repo.deletePostById(postId);
 	}
 
+	@Override
+	public List<PostDto> explore(int page) {
+		return repo.explore(page);
+	}
+
 }

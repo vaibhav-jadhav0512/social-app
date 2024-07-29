@@ -23,4 +23,6 @@ public interface PostService {
 	List<PostDto> getUserPosts(String userName);
 
 	void deletePostById(int postId);
+
+	List<PostDto> explore(int page);
 }

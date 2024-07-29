@@ -24,4 +24,6 @@ public interface PostRepository {
 
 	void deletePostById(int postId);
 
+	List<PostDto> explore(int page);
+
 }
