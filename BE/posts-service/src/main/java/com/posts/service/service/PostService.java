@@ -25,4 +25,6 @@ public interface PostService {
 	void deletePostById(int postId);
 
 	List<PostDto> explore(int page);
+
+	List<PostDto> search(String keyword, int page);
 }
