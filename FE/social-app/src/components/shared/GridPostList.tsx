@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 
 import PostStats from "@/components/shared/PostStats";
 import { useUserContext } from "@/context/AuthContext";
+import { PostType } from "@/types";
 
 type GridPostListProps = {
-  posts: Models.Document[];
+  posts: PostType[];
   showUser?: boolean;
   showStats?: boolean;
 };
@@ -19,10 +20,10 @@ const GridPostList = ({
   return (
     <ul className="grid-container">
       {posts.map((post) => (
-        <li key={post.$id} className="relative min-w-80 h-80">
-          <Link to={`/posts/${post.$id}`} className="grid-post_link">
+        <li key={post.postId} className="relative min-w-80 h-80">
+          <Link to={`/posts/${post.postId}`} className="grid-post_link">
             <img
-              src={post.imageUrl}
+              src={post?.files[0].imageUrl}
               alt="post"
               className="h-full w-full object-cover"
             />
@@ -33,16 +34,16 @@ const GridPostList = ({
               <div className="flex items-center justify-start gap-2 flex-1">
                 <img
                   src={
-                    post.creator.imageUrl ||
+                    post?.files[0].url ||
                     "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"
                   className="w-8 h-8 rounded-full"
                 />
-                <p className="line-clamp-1">{post.creator.name}</p>
+                <p className="line-clamp-1">{post.userName}</p>
               </div>
             )}
-            {/* {showStats && <PostStats post={post} userId={user.id} />} */}
+            {showStats && <PostStats post={post} userName={user.userName} />}
           </div>
         </li>
       ))}
