@@ -29,8 +29,9 @@ public class PostQueries {
 	public static final String UPDATE_POST = "UPDATE auth.posts SET "
 			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=CURRENT_TIMESTAMP WHERE id=:postId";
 	public static final String DELETE_FILES = "DELETE FROM auth.files WHERE post_id=:postId";
-	public static final String GET_USER_POSTS = "SELECT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at, "
+	public static final String GET_USER_POSTS = "SELECT DISTINCT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at, "
 			+ "f.id AS file_id, f.url AS file_url, f.post_id " + "FROM auth.posts p "
-			+ "LEFT JOIN auth.files f ON p.id = f.post_id AND p.user_name=:userName " + "ORDER BY p.updated_at DESC";
+			+ "JOIN auth.likes l ON p.id=l.post_id LEFT JOIN auth.files f ON p.id = f.post_id AND p.user_name=:userName "
+			+ "ORDER BY p.updated_at DESC";
 	public static final String DELETE_POST_BY_ID = "DELETE FROM auth.posts WHERE id=:postId";
 }
