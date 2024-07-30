@@ -26,6 +26,6 @@ public interface PostRepository {
 
 	List<PostDto> explore(int page);
 
-	List<PostDto> search(String keyword, int page);
+	List<PostDto> search(String keyword);
 
 }

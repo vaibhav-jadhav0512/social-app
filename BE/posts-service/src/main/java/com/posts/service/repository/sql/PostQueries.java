@@ -41,5 +41,5 @@ public class PostQueries {
 	public static final String SEARCH = "SELECT DISTINCT p.id, p.user_name, p.caption, p.location, p.tags, p.created_at, p.updated_at,  "
 			+ "                f.id AS file_id, f.url AS file_url " + "FROM auth.posts p "
 			+ "LEFT JOIN auth.likes l ON p.id = l.post_id " + "LEFT JOIN auth.files f ON p.id = f.post_id "
-			+ "WHERE UPPER(p.caption) LIKE UPPER(:keyword) " + "ORDER BY p.updated_at DESC " + "LIMIT 6 OFFSET :page;";
+			+ "WHERE UPPER(p.caption) LIKE UPPER(:keyword) " + "ORDER BY p.updated_at DESC " + "LIMIT 6";
 }

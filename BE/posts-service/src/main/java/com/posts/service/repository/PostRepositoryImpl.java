@@ -139,9 +139,8 @@ public class PostRepositoryImpl implements PostRepository {
 	}
 
 	@Override
-	public List<PostDto> search(String keyword, int page) {
+	public List<PostDto> search(String keyword) {
 		Map<String, Object> paramMaps = new HashMap<>();
-		paramMaps.put("page", (page - 1) * 6);
 		paramMaps.put("keyword", "%" + keyword + "%");
 		List<PostDto> list = template.query(PostQueries.SEARCH, paramMaps, new PostFileMapper());
 		for (PostDto post : list) {

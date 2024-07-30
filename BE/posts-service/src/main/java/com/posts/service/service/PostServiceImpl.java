@@ -62,8 +62,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto> search(String keyword, int page) {
-		return repo.search(keyword, page);
+	public List<PostDto> search(String keyword) {
+		return repo.search(keyword);
 	}
 
 }
