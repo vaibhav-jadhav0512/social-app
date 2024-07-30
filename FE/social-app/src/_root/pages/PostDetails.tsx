@@ -24,8 +24,6 @@ const PostDetails = () => {
   const relatedPosts = userPosts?.filter(
     (userPost) => userPost.userName !== user.userName
   );
-  console.log(userPosts);
-  console.log(relatedPosts);
   const handleDeletePost = () => {
     deletePost({ postId: post?.postId });
     navigate(-1);

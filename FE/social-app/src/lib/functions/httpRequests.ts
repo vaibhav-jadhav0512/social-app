@@ -289,3 +289,38 @@ export const deletePost = async (postId: number): Promise<VoidFunction> => {
     throw error;
   }
 };
+export const explore = async (page: number): Promise<PostType[]> => {
+  const apiUrl = "http://192.168.1.110:8181/posts/explore";
+  try {
+    const response: AxiosResponse<PostType[]> = await axios.get(
+      `${apiUrl}?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const searchPosts = async (keyword: string): Promise<PostType[]> => {
+  const apiUrl = "http://192.168.1.110:8181/posts/search";
+  try {
+    const response: AxiosResponse<PostType[]> = await axios.get(
+      `${apiUrl}?keyword=${keyword}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};

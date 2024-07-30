@@ -20,9 +20,12 @@ import {
   getPostById,
   getUserPosts,
   deletePost,
+  explore,
+  searchPosts,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
+import { useState } from "react";
 
 export const useCreateUserAccountMutation = () => {
   return useMutation({
@@ -226,5 +229,27 @@ export const useDeletePost = () => {
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
       });
     },
+  });
+};
+export const useGetPosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: ({ pageParam }) => explore(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage && lastPage.length === 0) {
+        return null;
+      }
+      const nextPage = allPages.length + 1;
+      return nextPage;
+    },
+  });
+};
+
+export const useSearchPosts = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
+    queryFn: () => searchPosts(searchTerm),
+    enabled: !!searchTerm,
   });
 };
