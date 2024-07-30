@@ -125,8 +125,24 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public List<PostDto> explore(int page) {
 		Map<String, Object> paramMaps = new HashMap<>();
-		paramMaps.put("page", (page - 1) * 10);
+		paramMaps.put("page", (page - 1) * 6);
 		List<PostDto> list = template.query(PostQueries.EXPLORE, paramMaps, new PostFileMapper());
+		for (PostDto post : list) {
+			Map<String, Object> paramMap = new HashMap<>();
+			paramMap.put("postId", post.getPostId());
+			List<Files> files = template.query(PostQueries.GET_FILES_BY_POSTID, paramMap, new FilesMapper());
+			post.setFiles(files);
+			List<Likes> likes = template.query(PostQueries.GET_LIKES_BY_POSTID, paramMap, new LikesMapper());
+			post.setLikes(likes);
+		}
+		return list;
+	}
+
+	@Override
+	public List<PostDto> search(String keyword) {
+		Map<String, Object> paramMaps = new HashMap<>();
+		paramMaps.put("keyword", "%" + keyword + "%");
+		List<PostDto> list = template.query(PostQueries.SEARCH, paramMaps, new PostFileMapper());
 		for (PostDto post : list) {
 			Map<String, Object> paramMap = new HashMap<>();
 			paramMap.put("postId", post.getPostId());

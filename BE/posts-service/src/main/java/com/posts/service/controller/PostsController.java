@@ -134,4 +134,9 @@ public class PostsController {
 	public ResponseEntity<List<PostDto>> explore(@RequestParam(value = "page", defaultValue = "0") int page) {
 		return new ResponseEntity<>(service.explore(page), HttpStatus.OK);
 	}
+
+	@GetMapping("/search")
+	public ResponseEntity<List<PostDto>> search(@RequestParam(value = "keyword") String keyword) {
+		return new ResponseEntity<>(service.search(keyword), HttpStatus.OK);
+	}
 }
