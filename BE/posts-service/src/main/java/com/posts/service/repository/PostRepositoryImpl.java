@@ -125,7 +125,7 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public List<PostDto> explore(int page) {
 		Map<String, Object> paramMaps = new HashMap<>();
-		paramMaps.put("page", (page - 1) * 5);
+		paramMaps.put("page", (page - 1) * 6);
 		List<PostDto> list = template.query(PostQueries.EXPLORE, paramMaps, new PostFileMapper());
 		for (PostDto post : list) {
 			Map<String, Object> paramMap = new HashMap<>();
@@ -141,7 +141,7 @@ public class PostRepositoryImpl implements PostRepository {
 	@Override
 	public List<PostDto> search(String keyword, int page) {
 		Map<String, Object> paramMaps = new HashMap<>();
-		paramMaps.put("page", (page - 1) * 5);
+		paramMaps.put("page", (page - 1) * 6);
 		paramMaps.put("keyword", "%" + keyword + "%");
 		List<PostDto> list = template.query(PostQueries.SEARCH, paramMaps, new PostFileMapper());
 		for (PostDto post : list) {
