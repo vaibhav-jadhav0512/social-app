@@ -16,6 +16,12 @@ spring:
             - Path=/posts/**, /likes/**, /saver/**
           filters:
             - AuthenticationFilter
+        - id: user-info-service
+          uri: lb://user-info-service
+          predicates:
+            - Path=/users/**
+          filters:
+            - AuthenticationFilter				
       discovery:
         locator:
           enabled: true
