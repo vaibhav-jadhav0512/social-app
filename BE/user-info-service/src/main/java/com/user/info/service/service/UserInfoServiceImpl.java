@@ -17,5 +17,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return repo.getUserInfo(userName);
 	}
 
+	@Override
+	public int updateUserInfo(UserInfo userInfo) {
+		return repo.updateUserInfo(userInfo);
+	}
 
 }

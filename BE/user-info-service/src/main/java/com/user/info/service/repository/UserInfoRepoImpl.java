@@ -24,4 +24,15 @@ public class UserInfoRepoImpl implements UserInfoRepo {
 		return template.queryForObject(UserInfoQueries.GET_USER_INFO, paramMap, new UserInfoMapper());
 	}
 
+	@Override
+	public int updateUserInfo(UserInfo userInfo) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userName", userInfo.getUserName());
+		paramMap.put("fullName", userInfo.getFullName());
+		paramMap.put("bio", userInfo.getBio());
+		paramMap.put("mobile", userInfo.getMobile());
+		paramMap.put("profileImage", userInfo.getProfileImage());
+		return template.update(UserInfoQueries.UPDATE_USER_INFO, paramMap);
+	}
+
 }

@@ -1,10 +1,12 @@
-package com.user.info.service;
+package com.user.info.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,11 @@ public class UserInfoController {
 	@GetMapping("/get/info/{userName}")
 	public ResponseEntity<UserInfo> getUserInfo(@PathVariable("userName") String userName) {
 		return new ResponseEntity<>(service.getUserInfo(userName), HttpStatus.OK);
+	}
+
+	@PostMapping("/update")
+	public ResponseEntity<Integer> updateUserInfo(@RequestBody UserInfo userInfo) {
+		return new ResponseEntity<>(service.updateUserInfo(userInfo), HttpStatus.CREATED);
 	}
 
 }
