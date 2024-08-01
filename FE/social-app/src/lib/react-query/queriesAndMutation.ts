@@ -22,10 +22,10 @@ import {
   deletePost,
   explore,
   searchPosts,
+  getAllUsers,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
-import { useState } from "react";
 
 export const useCreateUserAccountMutation = () => {
   return useMutation({
@@ -129,11 +129,9 @@ export const useGetCurrentUser = () => {
 export const useGetSavedPosts = () => {
   const { data: currentUser } = useGetCurrentUser();
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_SAVED_POSTS, currentUser?.userName],
+    queryKey: [QUERY_KEYS.GET_SAVED_POSTS],
     queryFn: () =>
-      currentUser
-        ? getSavedPosts(currentUser.userName)
-        : Promise.reject("User not logged in"),
+      currentUser ? getSavedPosts() : Promise.reject("User not logged in"),
   });
 };
 export const useSavePost = () => {
@@ -251,5 +249,11 @@ export const useSearchPosts = (searchTerm: string) => {
     queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
     queryFn: () => searchPosts(searchTerm),
     enabled: !!searchTerm,
+  });
+};
+export const useGetAllUsers = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USERS],
+    queryFn: () => getAllUsers(),
   });
 };
