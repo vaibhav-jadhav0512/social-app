@@ -64,7 +64,7 @@ const PostDetails = () => {
               >
                 <img
                   src={
-                    post?.files[0].url ||
+                    post?.profileImage ||
                     "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"

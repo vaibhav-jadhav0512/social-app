@@ -6,6 +6,7 @@ import {
   IUser,
   Likes,
   PostType,
+  UserInfo,
 } from "@/types";
 import { SignUpResponse } from "./userTypes";
 
@@ -318,6 +319,23 @@ export const searchPosts = async (keyword: string): Promise<PostType[]> => {
         },
       }
     );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserInfoFromToken = async (
+  token: string
+): Promise<UserInfo> => {
+  const apiUrl = "http://192.168.1.110:8181/users/get/info";
+  try {
+    const response: AxiosResponse<UserInfo> = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     console.log(error);

@@ -86,6 +86,7 @@ export type PostType = {
   files: Files[];
   likes: Likes[];
   imageUrl: string;
+  profileImage: string;
 };
 export type Likes = {
   id: number;
@@ -97,4 +98,12 @@ export type Files = {
   id: number;
   url: string;
   imageUrl: string;
+};
+
+export type UserInfo = {
+  userName: string;
+  mobile: string;
+  profileImage: string;
+  fullName: string;
+  bio: string;
 };

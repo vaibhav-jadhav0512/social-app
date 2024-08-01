@@ -15,7 +15,7 @@ const PostCard = ({ post }: PostProps) => {
           <Link to={`/profile/${post?.userName}`}>
             <img
               src={
-                post?.files[0].url || "/assets/icons/profile-placeholder.svg"
+                post?.profileImage || "/assets/icons/profile-placeholder.svg"
               }
               alt="creator"
               className="w-12 lg:h-12 rounded-full"

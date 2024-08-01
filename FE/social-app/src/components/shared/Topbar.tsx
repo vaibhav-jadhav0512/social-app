@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useUserContext } from "@/context/AuthContext";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutation";
+import { useUserInfoContext } from "@/context/UserInfoContext";
 
 const Topbar = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
   const { mutate: signOut, isSuccess } = useSignOutAccount();
-
+  const { user: userInfo } = useUserInfoContext();
   useEffect(() => {
     if (isSuccess) navigate(0);
   }, [isSuccess]);
@@ -36,7 +37,9 @@ const Topbar = () => {
           </Button>
           <Link to={`/profile/${user.userName}`} className="flex-center gap-3">
             <img
-              src={user.imageUrl || "/assets/icons/profile-placeholder.svg"}
+              src={
+                userInfo.profileImage || "/assets/icons/profile-placeholder.svg"
+              }
               alt="profile"
               className="h-8 w-8 rounded-full"
             />

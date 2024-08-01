@@ -6,6 +6,7 @@ import Loader from "@/components/shared/Loader";
 import { Button } from "@/components/ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutation";
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
+import { useUserInfoContext } from "@/context/UserInfoContext";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const LeftSidebar = () => {
   const { user, setUser, setIsAuthenticated, isLoading } = useUserContext();
 
   const { mutate: signOut } = useSignOutAccount();
+  const { user: userInfo } = useUserInfoContext();
 
   const handleSignOut = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -46,7 +48,9 @@ const LeftSidebar = () => {
             className="flex gap-3 items-center"
           >
             <img
-              src={user.imageUrl || "/assets/icons/profile-placeholder.svg"}
+              src={
+                userInfo.profileImage || "/assets/icons/profile-placeholder.svg"
+              }
               alt="profile"
               className="h-14 w-14 rounded-full"
             />
