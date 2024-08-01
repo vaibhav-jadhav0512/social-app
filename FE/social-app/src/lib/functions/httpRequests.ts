@@ -177,17 +177,14 @@ export const unLikePost = async (like: Likes): Promise<number> => {
     throw error;
   }
 };
-export const getSavedPosts = async (userName: string): Promise<PostType[]> => {
+export const getSavedPosts = async (): Promise<PostType[]> => {
   const apiUrl = "http://192.168.1.110:8181/saver/get";
   try {
-    const response: AxiosResponse<PostType[]> = await axios.get(
-      `${apiUrl}/${userName}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const response: AxiosResponse<PostType[]> = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     console.log(error);
@@ -334,6 +331,21 @@ export const getUserInfoFromToken = async (
     const response: AxiosResponse<UserInfo> = await axios.get(apiUrl, {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getAllUsers = async (): Promise<UserInfo[]> => {
+  const apiUrl = "http://192.168.1.110:8181/users/get/all";
+  try {
+    const response: AxiosResponse<UserInfo[]> = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     return response.data;
