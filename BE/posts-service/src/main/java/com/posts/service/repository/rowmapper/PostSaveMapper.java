@@ -14,6 +14,7 @@ public class PostSaveMapper implements RowMapper<PostDto> {
 		PostDto postDto = new PostDto();
 		postDto.setPostId(rs.getInt("post_id"));
 		postDto.setUserName(rs.getString("user_name"));
+		postDto.setProfileImage(rs.getString("profile_image"));
 		return postDto;
 	}
 }

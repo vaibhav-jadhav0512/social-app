@@ -25,8 +25,8 @@ public class PostQueries {
 	public static final String SAVED_POST = "INSERT INTO auth.saved " + "(id, user_name, post_id) "
 			+ "VALUES(nextval('auth.saved_id_seq'::regclass), :userName, :postId);";
 	public static final String UNSAVE_POST = "DELETE FROM auth.saved WHERE user_name=:userName AND post_id=:postId";
-	public static final String GET_SAVED_POSTS_BY_USER_NAME = "SELECT id, user_name, post_id "
-			+ "FROM auth.saved WHERE user_name=:userName";
+	public static final String GET_SAVED_POSTS_BY_USER_NAME = "SELECT s.id, s.user_name, s.post_id, ui.profile_image "
+			+ "FROM auth.saved s LEFT JOIN auth.user_info ui ON s.user_name = ui.user_name WHERE s.user_name=:userName";
 	public static final String UPDATE_POST = "UPDATE auth.posts SET "
 			+ "caption=:caption, \"location\"=:location, tags=:tags, updated_at=CURRENT_TIMESTAMP WHERE id=:postId";
 	public static final String DELETE_FILES = "DELETE FROM auth.files WHERE post_id=:postId";
