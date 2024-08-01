@@ -18,6 +18,7 @@ public class PostFileMapper implements RowMapper<PostDto> {
         postDto.setLocation(rs.getString("location"));
         postDto.setTags(rs.getString("tags"));
 		postDto.setCreatedAt(rs.getTimestamp("created_at"));
+		postDto.setProfileImage(rs.getString("profile_image"));
 		return postDto;
 	}
     }

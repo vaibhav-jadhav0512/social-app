@@ -22,5 +22,6 @@ public class PostDto {
 	private Date createdAt;
 	private List<Likes> likes;
 	private List<Files> files;
+	private String profileImage;
 
 }
