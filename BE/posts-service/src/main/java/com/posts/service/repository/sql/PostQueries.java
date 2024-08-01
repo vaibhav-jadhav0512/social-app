@@ -47,4 +47,8 @@ public class PostQueries {
 			+ "LEFT JOIN auth.likes l ON p.id = l.post_id " + "LEFT JOIN auth.files f ON p.id = f.post_id LEFT JOIN "
 			+ "    auth.user_info ui ON p.user_name = ui.user_name "
 			+ "WHERE UPPER(p.caption) LIKE UPPER(:keyword) " + "ORDER BY p.updated_at DESC " + "LIMIT 6";
+	public static final String LIKED_POSTS = "SELECT DISTINCT p.id, p.user_name, p.caption,  p.location, p.tags, p.created_at, ui.profile_image, "
+			+ "    p.updated_at FROM auth.posts p "
+			+ "JOIN auth.likes l ON p.id = l.post_id LEFT JOIN  auth.user_info ui ON p.user_name = ui.user_name "
+			+ "WHERE l.user_name =:userName";
 }
