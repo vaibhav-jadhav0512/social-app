@@ -23,6 +23,8 @@ import {
   explore,
   searchPosts,
   getAllUsers,
+  getLikedPosts,
+  getUserByUserName,
 } from "../functions/httpRequests";
 import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -255,5 +257,25 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_USERS],
     queryFn: () => getAllUsers(),
+  });
+};
+export const useGetLikedPosts = () => {
+  const { data: currentUser } = useGetCurrentUser();
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_LIKED_POSTS],
+    queryFn: () =>
+      currentUser ? getLikedPosts() : Promise.reject("User not logged in"),
+  });
+};
+export const useGetUserByUserName = (userName?: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_BY_ID, userName],
+    queryFn: () => {
+      if (userName === undefined) {
+        return Promise.reject(new Error("userName is undefined"));
+      }
+      return getUserByUserName(userName);
+    },
+    enabled: !!userName,
   });
 };

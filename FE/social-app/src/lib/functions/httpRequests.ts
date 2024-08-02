@@ -354,3 +354,38 @@ export const getAllUsers = async (): Promise<UserInfo[]> => {
     throw error;
   }
 };
+
+export const getLikedPosts = async (): Promise<PostType[]> => {
+  const apiUrl = "http://192.168.1.110:8181/likes/liked/posts";
+  try {
+    const response: AxiosResponse<PostType[]> = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getUserByUserName = async (
+  userName: string
+): Promise<UserInfo> => {
+  const apiUrl = "http://192.168.1.110:8181/users/get";
+  try {
+    const response: AxiosResponse<UserInfo> = await axios.get(
+      `${apiUrl}/${userName}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
