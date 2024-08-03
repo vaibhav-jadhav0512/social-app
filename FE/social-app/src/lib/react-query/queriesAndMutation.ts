@@ -25,8 +25,17 @@ import {
   getAllUsers,
   getLikedPosts,
   getUserByUserName,
+  updateUser,
 } from "../functions/httpRequests";
-import { INewPost, INewUser, ISignIn, IUpdatePost, Likes } from "@/types";
+import {
+  INewPost,
+  INewUser,
+  ISignIn,
+  IUpdatePost,
+  IUpdateUser,
+  Likes,
+  UserInfo,
+} from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
 
 export const useCreateUserAccountMutation = () => {
@@ -277,5 +286,19 @@ export const useGetUserByUserName = (userName?: string) => {
       return getUserByUserName(userName);
     },
     enabled: !!userName,
+  });
+};
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (user: IUpdateUser) => updateUser(user),
+    onSuccess: (data: UserInfo) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_USER_BY_ID, data.userName],
+      });
+    },
   });
 };

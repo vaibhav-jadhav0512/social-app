@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/lib/functions/httpRequests";
 
 export const INITIAL_USER = {
   userId: "",
-  name: "",
+  fullName: "",
   userName: "",
   email: "",
   imageUrl: "",
@@ -29,12 +29,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const checkAuthUser = async () => {
     setIsLoading(true);
     try {
-      const { userId, name, userName, email, imageUrl, bio } =
+      const { userId, fullName, userName, email, imageUrl, bio } =
         await getCurrentUser();
       if (userId) {
         setUser({
           userId,
-          name,
+          fullName,
           userName,
           email,
           imageUrl,

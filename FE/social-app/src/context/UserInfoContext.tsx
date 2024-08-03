@@ -37,7 +37,6 @@ const UserInfoProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const userInfo = await getUserInfoFromToken(token);
         setUser(userInfo);
-        console.log(userInfo);
       } catch (err) {
         setError("Failed to fetch user information");
         console.error(err);
@@ -47,7 +46,7 @@ const UserInfoProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     fetchUserInfo();
-  }, []);
+  }, [localStorage.getItem("token")]);
 
   const value = { user, isLoading, error };
 

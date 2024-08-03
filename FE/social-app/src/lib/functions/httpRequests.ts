@@ -3,6 +3,7 @@ import {
   INewUser,
   ISignIn,
   IUpdatePost,
+  IUpdateUser,
   IUser,
   Likes,
   PostType,
@@ -380,6 +381,34 @@ export const getUserByUserName = async (
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error: unknown) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updateUser = async (user: IUpdateUser): Promise<UserInfo> => {
+  const apiUrl = "http://192.168.1.110:8181/users/update";
+  const formData = new FormData();
+  user.file.forEach((file, index) => {
+    formData.append(`files`, file);
+  });
+  formData.append("bio", user.bio);
+  formData.append("fullName", user.fullName);
+  formData.append("userName", user.userName);
+  console.log(formData);
+  try {
+    const response: AxiosResponse<UserInfo> = await axios.put(
+      apiUrl,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
