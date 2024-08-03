@@ -18,9 +18,8 @@ public class UserInfoMapper {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUserName(userRegistrationDto.userName());
 		userInfo.setEmail(userRegistrationDto.email());
-		userInfo.setMobile(userRegistrationDto.mobile());
-		userInfo.setName(userRegistrationDto.name());
 		userInfo.setPassword(passwordEncoder.encode(userRegistrationDto.password()));
+		userInfo.setFullName(userRegistrationDto.name());
 		return userInfo;
 	}
 }

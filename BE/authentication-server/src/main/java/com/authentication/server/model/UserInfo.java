@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class UserInfo {
 	private int userId;
 	private String userName;
-	private String name;
 	private String email;
+	private String fullName;
 	@JsonIgnore
 	private String password;
 	private String mobile;

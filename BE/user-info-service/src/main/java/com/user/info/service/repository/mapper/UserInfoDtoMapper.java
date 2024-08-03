@@ -12,7 +12,7 @@ public class UserInfoDtoMapper implements RowMapper<UserInfoDto> {
 	public UserInfoDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		UserInfoDto userInfo = new UserInfoDto();
 		userInfo.setUserName(rs.getString("user_name"));
-		userInfo.setFullName(rs.getString("name"));
+		userInfo.setFullName(rs.getString("full_name"));
 		userInfo.setProfileImage(rs.getString("profile_image"));
 		return userInfo;
 	}
