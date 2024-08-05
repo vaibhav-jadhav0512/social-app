@@ -9,7 +9,6 @@ import {
   useSignOutAccount,
 } from "@/lib/react-query/queriesAndMutation";
 import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
-import { useUserInfoContext } from "@/context/UserInfoContext";
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ const LeftSidebar = () => {
   const { user, setUser, setIsAuthenticated, isLoading } = useUserContext();
 
   const { mutate: signOut } = useSignOutAccount();
-  const { user: userInfo } = useUserInfoContext();
   const { data: currentUser } = useGetUserByUserName(user.userName || "");
 
   const handleSignOut = async (

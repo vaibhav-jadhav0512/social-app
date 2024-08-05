@@ -73,7 +73,7 @@ export const signOutAccount = async () => {
 export const createPost = async (post: INewPost): Promise<INewPost> => {
   const apiUrl = "http://35.154.223.113/posts/create";
   const formData = new FormData();
-  post.files.forEach((file, index) => {
+  post.files.forEach((file) => {
     formData.append(`files`, file);
   });
   formData.append("userName", post.userName);
@@ -102,7 +102,7 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
 export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
   const apiUrl = "http://35.154.223.113/posts/update";
   const formData = new FormData();
-  post.files.forEach((file, index) => {
+  post.files.forEach((file) => {
     formData.append(`files`, file);
   });
   formData.append("postId", post?.postId.toString());
@@ -394,7 +394,7 @@ export const getUserByUserName = async (
 export const updateUser = async (user: IUpdateUser): Promise<UserInfo> => {
   const apiUrl = "http://15.206.163.176/users/update";
   const formData = new FormData();
-  user.file.forEach((file, index) => {
+  user.file.forEach((file) => {
     formData.append(`files`, file);
   });
   formData.append("bio", user.bio);

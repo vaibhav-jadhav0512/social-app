@@ -13,7 +13,6 @@ import Loader from "@/components/shared/Loader";
 import GridPostList from "@/components/shared/GridPostList";
 import LikedPosts from "./LikedPosts";
 import {
-  useGetLikedPosts,
   useGetUserByUserName,
   useGetUserPosts,
 } from "@/lib/react-query/queriesAndMutation";

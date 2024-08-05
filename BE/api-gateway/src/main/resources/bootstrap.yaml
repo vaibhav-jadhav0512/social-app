@@ -1,7 +1,36 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: api-gateway
   cloud:
-    config:
-      uri: http://13.233.101.254/
-      label: main
+    gateway:
+      routes:
+        - id: authentication-server
+          uri: lb://authentication-server
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+        - id: posts-service
+          uri: lb://posts-service
+          predicates:
+            - Path=/posts/**
+          filters:
+            - AuthenticationFilter
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://15.206.148.78/eureka
+
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
