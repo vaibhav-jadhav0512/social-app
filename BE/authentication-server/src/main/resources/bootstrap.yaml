@@ -3,5 +3,5 @@ spring:
     name: authentication-server
   cloud:
     config:
-      uri: http://15.206.148.78/
+      uri: http://13.233.101.254/
       label: main
