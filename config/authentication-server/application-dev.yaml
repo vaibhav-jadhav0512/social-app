@@ -2,7 +2,7 @@ server:
   port: 8888
 spring:
   datasource:
-    url: jdbc:postgresql://postgresdb-aws.cbi20g6wqru4.ap-south-1.rds.amazonaws.com:5432/postgres
+    url: jdbc:postgresql://postgres.cbi20g6wqru4.ap-south-1.rds.amazonaws.com:5432/postgres
     username: postgres
     password: vaibhavjadhav
     driver-class-name: org.postgresql.Driver
