@@ -1,36 +1,7 @@
-server:
-  port: 8080
 spring:
+  application:
+    name: api-gateway
   cloud:
-    gateway:
-      routes:
-        - id: authentication-server
-          uri: lb://authentication-server
-          predicates:
-            - Path=/auth/**
-          filters:
-            - AuthenticationFilter
-        - id: posts-service
-          uri: lb://posts-service
-          predicates:
-            - Path=/posts/**, /likes/**, /saver/**
-          filters:
-            - AuthenticationFilter
-        - id: user-info-service
-          uri: lb://user-info-service
-          predicates:
-            - Path=/users/**
-          filters:
-            - AuthenticationFilter
-      discovery:
-        locator:
-          enabled: true
-          lowerCaseServiceId: true
-eureka:
-  instance:
-    hostname: 15.206.148.78
-  client:
-    fetch-registry: true
-    register-with-eureka: false
-    service-url:
-      defaultZone: http://15.206.148.78/eureka
+    config:
+      uri: http://13.233.101.254/
+      label: main
