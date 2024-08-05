@@ -30,4 +30,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return repo.getAllUsers();
 	}
 
+	@Override
+	public void updateProfileImage(String userName, String url) {
+		repo.updateProfileImage(userName, url);
+	}
+
 }

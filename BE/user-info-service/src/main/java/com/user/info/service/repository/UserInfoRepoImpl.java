@@ -33,14 +33,21 @@ public class UserInfoRepoImpl implements UserInfoRepo {
 		paramMap.put("userName", userInfo.getUserName());
 		paramMap.put("fullName", userInfo.getFullName());
 		paramMap.put("bio", userInfo.getBio());
-		paramMap.put("mobile", userInfo.getMobile());
-		paramMap.put("profileImage", userInfo.getProfileImage());
 		return template.update(UserInfoQueries.UPDATE_USER_INFO, paramMap);
 	}
 
 	@Override
 	public List<UserInfoDto> getAllUsers() {
 		return template.query(UserInfoQueries.GET_ALL_USERS, new UserInfoDtoMapper());
+	}
+
+	@Override
+	public void updateProfileImage(String userName, String url) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("userName", userName);
+		paramMap.put("url", url);
+		template.update(UserInfoQueries.UPDATE_PROFILE_IMAGE, paramMap);
+
 	}
 
 }

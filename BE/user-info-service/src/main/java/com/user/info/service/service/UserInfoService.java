@@ -13,4 +13,6 @@ public interface UserInfoService {
 
 	List<UserInfoDto> getAllUsers();
 
+	void updateProfileImage(String userName, String url);
+
 }
