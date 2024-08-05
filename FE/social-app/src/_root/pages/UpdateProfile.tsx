@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import ProfileUploader from "@/components/shared/ProfileUploader";
+import { useState } from "react";
 
 const UpdateProfile = () => {
   const { toast } = useToast();
@@ -31,6 +32,8 @@ const UpdateProfile = () => {
   const { userName: id } = useParams();
   const { user, setUser } = useUserContext();
   console.log(user);
+  const { data: currentUser, isLoading } = useGetUserByUserName(id || "");
+  const [loading, setloading] = useState(false);
   const form = useForm<z.infer<typeof ProfileValidation>>({
     resolver: zodResolver(ProfileValidation),
     defaultValues: {
@@ -38,11 +41,10 @@ const UpdateProfile = () => {
       fullName: user.fullName || "",
       userName: user.userName || "",
       email: user.email || "",
-      bio: user.bio || "",
+      bio: currentUser?.bio || "",
     },
   });
   // Queries
-  const { data: currentUser, isLoading } = useGetUserByUserName(id || "");
   const { mutateAsync: updateUser } = useUpdateUser();
 
   if (isLoading) {
@@ -52,13 +54,13 @@ const UpdateProfile = () => {
       </div>
     );
   }
-  console.log(currentUser);
   if (!currentUser) {
     return <div>Failed to load user data.</div>;
   }
 
   // Handler
   const handleUpdate = async (value: z.infer<typeof ProfileValidation>) => {
+    setloading(true);
     try {
       const updatedUser = await updateUser({
         userName: currentUser.userName,
@@ -85,6 +87,8 @@ const UpdateProfile = () => {
       toast({
         title: `An error occurred. Please try again.`,
       });
+    } finally {
+      setloading(false);
     }
   };
 
@@ -203,7 +207,9 @@ const UpdateProfile = () => {
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
+                disabled={loading}
               >
+                {loading && <Loader />}
                 Update Profile
               </Button>
             </div>

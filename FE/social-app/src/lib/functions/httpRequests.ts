@@ -400,7 +400,9 @@ export const updateUser = async (user: IUpdateUser): Promise<UserInfo> => {
   formData.append("bio", user.bio);
   formData.append("fullName", user.fullName);
   formData.append("userName", user.userName);
-  console.log(formData);
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
   try {
     const response: AxiosResponse<UserInfo> = await axios.put(
       apiUrl,

@@ -46,7 +46,7 @@ const UserInfoProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     fetchUserInfo();
-  }, [localStorage.getItem("token")]);
+  }, []);
 
   const value = { user, isLoading, error };
 
