@@ -45,7 +45,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 		return path.startsWith("/auth");
 	}
 	private boolean validateToken(String token) {
-		String url = "http://localhost:8888/auth/validate-token";
+		String url = "http://13.232.173.254/auth/validate-token";
 		try {
 			ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(token),
 					Object.class);
