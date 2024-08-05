@@ -24,7 +24,7 @@ import com.user.info.service.service.UserInfoService;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*")
+@CrossOrigin(origins = "http://65.0.45.60:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowCredentials = "true")
 public class UserInfoController {
 
 	@Autowired

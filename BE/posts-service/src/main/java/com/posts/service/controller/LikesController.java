@@ -20,7 +20,7 @@ import com.posts.service.service.LikesService;
 
 @RestController
 @RequestMapping("/likes")
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST}, allowedHeaders = "*")
+@CrossOrigin(origins = "http://65.0.45.60:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowCredentials = "true")
 public class LikesController {
 
 	@Autowired
