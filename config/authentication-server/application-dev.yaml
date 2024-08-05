@@ -13,7 +13,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://13.235.76.196
+      defaultZone: http://13.235.76.196/eureka
 logging:
   level:
     org.springframework.security: trace
