@@ -21,8 +21,6 @@ spring:
           enabled: true
           lowerCaseServiceId: true
 eureka:
-  instance:
-    hostname: 15.206.148.78
   client:
     fetch-registry: true
     register-with-eureka: true
