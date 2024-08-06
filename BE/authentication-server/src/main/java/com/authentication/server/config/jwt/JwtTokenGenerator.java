@@ -29,7 +29,7 @@ public class JwtTokenGenerator {
 		String roles = getRolesOfUser(authentication);
 		String permissions = getPermissionsFromRoles(roles);
 		JwtClaimsSet claims = JwtClaimsSet.builder().issuedAt(Instant.now())
-				.expiresAt(Instant.now().plus(15, ChronoUnit.MINUTES)).subject(authentication.getName())
+				.expiresAt(Instant.now().plus(15, ChronoUnit.DAYS)).subject(authentication.getName())
 				.claim("scope", permissions).build();
 		return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 	}
