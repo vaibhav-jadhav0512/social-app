@@ -12,7 +12,7 @@ COPY BE/eureka-server/pom.xml BE/eureka-server/src /app/
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:17-jdk-alpine
 
 # Set the working directory
 WORKDIR /app
