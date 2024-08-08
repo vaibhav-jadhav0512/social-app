@@ -1,0 +1,55 @@
+name: Authentication Server CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "BE/authentication-server/**"
+
+jobs:
+  build-authentication-server:
+    name: Build and Test Authentication Server App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Build Spring Boot application
+        run: mvn clean package -DskipTests
+        working-directory: BE/authentication-server
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image for Spring Boot app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest .
+        working-directory: BE/authentication-server
+
+      - name: Push Docker image for Spring Boot app
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest
+
+  deploy-authentication-server:
+    name: Deploy Authentication Server to EC2
+    runs-on: aws-ec2-auth-server
+    needs: build-authentication-server
+    steps:
+      - name: Pull image from Docker Hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest
+
+      - name: Delete old container
+        run: docker rm -f authenticationServerContainer || true
+
+      - name: Run Docker container
+        run: docker run -d -p 8888:8888 --name authenticationServerContainer ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest

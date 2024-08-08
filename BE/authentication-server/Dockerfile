@@ -12,7 +12,7 @@ COPY src /app/src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=build /app/target/authentication-server-0.0.1-SNAPSHOT.jar /app/authentication-server.jar
 
 # Expose the application port
-EXPOSE 8765
+EXPOSE 8888
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "/app/authentication-server.jar"]
