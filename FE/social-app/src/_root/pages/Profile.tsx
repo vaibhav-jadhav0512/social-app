@@ -17,12 +17,12 @@ import {
   useGetUserPosts,
 } from "@/lib/react-query/queriesAndMutation";
 
-interface StabBlockProps {
+interface StatBlockProps {
   value: string | number;
   label: string;
 }
 
-const StatBlock = ({ value, label }: StabBlockProps) => (
+const StatBlock = ({ value, label }: StatBlockProps) => (
   <div className="flex-center gap-2">
     <p className="small-semibold lg:body-bold text-primary-500">{value}</p>
     <p className="small-medium lg:base-medium text-light-2">{label}</p>
@@ -30,21 +30,24 @@ const StatBlock = ({ value, label }: StabBlockProps) => (
 );
 
 const Profile = () => {
-  const { userName: id } = useParams();
+  const { userName: profileUserName } = useParams();
   const { user } = useUserContext();
   const { pathname } = useLocation();
 
-  const { data: currentUser } = useGetUserByUserName(id || "");
-  const { data: userPosts } = useGetUserPosts(id);
-  const filteredPosts = userPosts?.filter(
-    (userPost) => userPost.userName === user.userName
-  );
+  const { data: currentUser } = useGetUserByUserName(profileUserName || "");
+  const { data: userPosts } = useGetUserPosts(profileUserName);
+
   if (!currentUser)
     return (
       <div className="flex-center w-full h-full">
         <Loader />
       </div>
     );
+
+  // Filter posts for the current profile
+  const filteredPosts = userPosts?.filter(
+    (post) => post.userName === profileUserName
+  );
 
   return (
     <div className="profile-container">
@@ -80,16 +83,10 @@ const Profile = () => {
           </div>
 
           <div className="flex justify-center gap-4">
-            <div
-              className={`${
-                user.userName !== currentUser.userName && "hidden"
-              }`}
-            >
+            {user.userName === currentUser.userName ? (
               <Link
                 to={`/update-profile/${currentUser.userName}`}
-                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${
-                  user.userName !== currentUser.userName && "hidden"
-                }`}
+                className="h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg"
               >
                 <img
                   src={"/assets/icons/edit.svg"}
@@ -101,22 +98,21 @@ const Profile = () => {
                   Edit Profile
                 </p>
               </Link>
-            </div>
-            <div className={`${user.userName === id && "hidden"}`}>
+            ) : (
               <Button type="button" className="shad-button_primary px-8">
                 Follow
               </Button>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
-      {currentUser.userName === user.userName && (
+      {user.userName === currentUser.userName && (
         <div className="flex max-w-5xl w-full">
           <Link
-            to={`/profile/${id}`}
+            to={`/profile/${profileUserName}`}
             className={`profile-tab rounded-l-lg ${
-              pathname === `/profile/${id}` && "!bg-dark-3"
+              pathname === `/profile/${profileUserName}` && "!bg-dark-3"
             }`}
           >
             <img
@@ -128,9 +124,10 @@ const Profile = () => {
             Posts
           </Link>
           <Link
-            to={`/profile/${id}/liked-posts`}
+            to={`/profile/${profileUserName}/liked-posts`}
             className={`profile-tab rounded-r-lg ${
-              pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
+              pathname === `/profile/${profileUserName}/liked-posts` &&
+              "!bg-dark-3"
             }`}
           >
             <img
@@ -151,7 +148,7 @@ const Profile = () => {
             <GridPostList posts={filteredPosts || []} showUser={false} />
           }
         />
-        {currentUser.userName === user.userName && (
+        {user.userName === currentUser.userName && (
           <Route path="/liked-posts" element={<LikedPosts />} />
         )}
       </Routes>
