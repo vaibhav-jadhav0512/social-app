@@ -72,5 +72,5 @@ public class AuthController {
 		return new ResponseEntity<>(authService.findByUserName(authentication.getName()), HttpStatus.OK);
 
 	}
-
+//Test
 }
