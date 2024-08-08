@@ -5,7 +5,8 @@ FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
 
 # Copy the Maven pom.xml and the source code
-COPY pom.xml src /app/
+COPY pom.xml .
+COPY src /app/src
 
 
 # Package the application
