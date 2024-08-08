@@ -8,11 +8,12 @@ WORKDIR /app
 COPY pom.xml .
 COPY src /app/src
 
+
 # Package the application
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk-alpine
 
 # Set the working directory
 WORKDIR /app
