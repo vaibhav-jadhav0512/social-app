@@ -1,0 +1,58 @@
+name: Posts service CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "BE/posts-service/**"
+
+jobs:
+  build-posts-service:
+    name: Build and Test Posts Service App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Build Posts service application
+        run: mvn clean package -DskipTests
+        working-directory: BE/posts-service
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image for Spring Boot app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/posts-service:latest .
+        working-directory: BE/posts-service
+
+      - name: Push Docker image for Spring Boot app
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/posts-service:latest
+
+  deploy-posts-service:
+    name: Deploy Posts Service to EC2
+    runs-on: aws-ec2-posts-service
+    needs: build-posts-service
+    steps:
+      - name: Pull image from Docker Hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/posts-service:latest
+
+      - name: Delete old container
+        run: docker rm -f postsServiceContainer || true
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 8001:8001 --name postsServiceContainer \
+            -e SPRING_PROFILES_ACTIVE=dev \
+            ${{ secrets.DOCKER_USERNAME }}/posts-service:latest
