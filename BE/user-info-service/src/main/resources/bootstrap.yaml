@@ -3,4 +3,4 @@ spring:
     name: user-info-service
   cloud:
     config:
-      uri: http://13.233.101.254/
+      uri: http://43.205.242.153:8765
