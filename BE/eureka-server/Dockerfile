@@ -5,14 +5,14 @@ FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
 
 # Copy the Maven pom.xml and the source code
-COPY pom.xml .
-COPY src /app/src
+COPY BE/eureka-server/pom.xml BE/eureka-server/src /app/
+
 
 # Package the application
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime
-FROM openjdk:17-jdk
+FROM openjdk:17-jre-slim
 
 # Set the working directory
 WORKDIR /app

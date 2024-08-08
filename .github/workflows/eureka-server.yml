@@ -1,0 +1,55 @@
+name: Eureka Server CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "BE/eureka-server/**"
+
+jobs:
+  build-eureka-server:
+    name: Build and Test Eureka Server App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Build Eureka application
+        run: mvn clean package -DskipTests
+        working-directory: BE/eureka-server
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker image for Eureka app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest .
+        working-directory: BE/eureka-server
+
+      - name: Push Docker image for Spring Boot app
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest
+
+  deploy-eureka-server:
+    name: Deploy Eureka to EC2
+    runs-on: aws-ec2-eureka-server
+    needs: build-eureka-server
+    steps:
+      - name: Pull image from Docker Hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest
+
+      - name: Delete old container
+        run: docker rm -f eurekaServerContainer || true
+
+      - name: Run Docker container
+        run: docker run -d -p 8761:8761 --name eurekaServerContainer ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest
