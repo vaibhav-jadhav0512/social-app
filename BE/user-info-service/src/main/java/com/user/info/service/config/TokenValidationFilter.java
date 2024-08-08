@@ -51,7 +51,7 @@ public class TokenValidationFilter extends OncePerRequestFilter {
 	}
 
 	private boolean validateToken(String token) {
-		String url = "http://authentication-server:8080/auth/validate-token";
+		String url = "http://65.2.183.20:8888/auth/validate-token";
 		try {
 			ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, getRequestEntity(token),
 					Object.class);
