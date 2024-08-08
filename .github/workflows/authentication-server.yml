@@ -52,4 +52,7 @@ jobs:
         run: docker rm -f authenticationServerContainer || true
 
       - name: Run Docker container
-        run: docker run -d -p 8888:8888 --name authenticationServerContainer ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest
+        run: |
+          docker run -d -p 8888:8888 --name authenticationServerContainer \
+            -e SPRING_PROFILES_ACTIVE=dev \
+            ${{ secrets.DOCKER_USERNAME }}/authentication-server:latest
