@@ -5,7 +5,7 @@ FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
 
 # Copy the Maven pom.xml and the source code
-COPY BE/eureka-server/pom.xml BE/eureka-server/src /app/
+COPY pom.xml src /app/
 
 
 # Package the application

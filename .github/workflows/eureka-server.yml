@@ -36,7 +36,7 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest .
         working-directory: BE/eureka-server
 
-      - name: Push Docker image for Spring Boot app
+      - name: Push Docker image for Eureka app
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/eureka-server:latest
 
