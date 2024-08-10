@@ -3,4 +3,4 @@ spring:
     name: posts-service
   cloud:
     config:
-      uri: http://43.205.242.153:8765
+      uri: http://3.110.107.240:8765
