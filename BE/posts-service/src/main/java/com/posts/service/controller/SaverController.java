@@ -20,7 +20,7 @@ import com.posts.service.service.SaveService;
 
 @RestController
 @RequestMapping("/saver")
-@CrossOrigin(origins = "http://3.111.34.33:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowCredentials = "true")
+@CrossOrigin(origins = "http://15.207.20.73:5173", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE}, allowCredentials = "true")
 public class SaverController {
 
 	@Autowired

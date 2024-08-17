@@ -36,7 +36,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
 		String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (token != null && token.startsWith("Bearer ")) {
-			String url = "http://15.207.221.209:8888/auth/validate-token";
+			String url = "http://3.111.39.145:8888/auth/validate-token";
 			try {
 				ResponseEntity<Object> responseEntity = restTemplate.exchange(url, HttpMethod.GET,
 						getRequestEntity(token), Object.class);

@@ -16,7 +16,7 @@ import axios, { AxiosResponse } from "axios";
 export const signUpUser = async (
   userData: INewUser
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://15.207.221.209:8888/auth/sign-up";
+  const apiUrl = "http://3.111.39.145:8888/auth/sign-up";
   try {
     const response: AxiosResponse<SignUpResponse> = await axios.post(
       apiUrl,
@@ -33,7 +33,7 @@ export const signUpUser = async (
 export const signInUser = async (
   userData: ISignIn
 ): Promise<SignUpResponse> => {
-  const apiUrl = "http://15.207.221.209:8888/auth/sign-in";
+  const apiUrl = "http://3.111.39.145:8888/auth/sign-in";
   try {
     const credentials = btoa(`${userData.userName}:${userData.password}`);
     const response: AxiosResponse<SignUpResponse> = await axios.post(
@@ -54,7 +54,7 @@ export const signInUser = async (
 };
 
 export const getCurrentUser = async (): Promise<IUser> => {
-  const apiUrl = "http://15.207.221.209:8888/auth/user";
+  const apiUrl = "http://3.111.39.145:8888/auth/user";
   try {
     const response: AxiosResponse<IUser> = await axios.get(apiUrl, {
       headers: {
@@ -71,7 +71,7 @@ export const signOutAccount = async () => {
   await localStorage.removeItem("token");
 };
 export const createPost = async (post: INewPost): Promise<INewPost> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/create";
+  const apiUrl = "http://3.110.165.251:8001/posts/create";
   const formData = new FormData();
   post.files.forEach((file) => {
     formData.append(`files`, file);
@@ -100,7 +100,7 @@ export const createPost = async (post: INewPost): Promise<INewPost> => {
 };
 
 export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/update";
+  const apiUrl = "http://3.110.165.251:8001/posts/update";
   const formData = new FormData();
   post.files.forEach((file) => {
     formData.append(`files`, file);
@@ -128,7 +128,7 @@ export const updatePost = async (post: IUpdatePost): Promise<IUpdatePost> => {
 };
 
 export const getRecentPosts = async (): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/recent";
+  const apiUrl = "http://3.110.165.251:8001/posts/recent";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(apiUrl, {
       headers: {
@@ -143,7 +143,7 @@ export const getRecentPosts = async (): Promise<PostType[]> => {
 };
 
 export const likePost = async (like: Likes): Promise<number> => {
-  const apiUrl = "http://13.233.117.199:8001/likes/like";
+  const apiUrl = "http://3.110.165.251:8001/likes/like";
   try {
     const response: AxiosResponse<number> = await axios.post(
       `${apiUrl}/${like.userName}/${like.postId}`,
@@ -162,7 +162,7 @@ export const likePost = async (like: Likes): Promise<number> => {
 };
 
 export const unLikePost = async (like: Likes): Promise<number> => {
-  const apiUrl = "http://13.233.117.199:8001/likes/unlike";
+  const apiUrl = "http://3.110.165.251:8001/likes/unlike";
   try {
     const response: AxiosResponse<number> = await axios.delete(
       `${apiUrl}/${like.userName}/${like.postId}`,
@@ -179,7 +179,7 @@ export const unLikePost = async (like: Likes): Promise<number> => {
   }
 };
 export const getSavedPosts = async (): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/saver/get";
+  const apiUrl = "http://3.110.165.251:8001/saver/get";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(apiUrl, {
       headers: {
@@ -196,7 +196,7 @@ export const savePost = async (
   userName: string,
   postId: number
 ): Promise<number> => {
-  const apiUrl = "http://13.233.117.199:8001/saver/save";
+  const apiUrl = "http://3.110.165.251:8001/saver/save";
   try {
     const response: AxiosResponse<number> = await axios.post(
       `${apiUrl}/${userName}/${postId}`,
@@ -218,7 +218,7 @@ export const unSavePost = async (
   userName: string,
   postId: number
 ): Promise<number> => {
-  const apiUrl = "http://13.233.117.199:8001/saver/unsave";
+  const apiUrl = "http://3.110.165.251:8001/saver/unsave";
   try {
     const response: AxiosResponse<number> = await axios.delete(
       `${apiUrl}/${userName}/${postId}`,
@@ -236,7 +236,7 @@ export const unSavePost = async (
 };
 
 export const getPostById = async (postId: number): Promise<PostType> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/get";
+  const apiUrl = "http://3.110.165.251:8001/posts/get";
   try {
     const response: AxiosResponse<PostType> = await axios.get(
       `${apiUrl}/${postId}`,
@@ -254,7 +254,7 @@ export const getPostById = async (postId: number): Promise<PostType> => {
 };
 
 export const getUserPosts = async (userName: string): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/user";
+  const apiUrl = "http://3.110.165.251:8001/posts/user";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(
       `${apiUrl}/${userName}`,
@@ -272,7 +272,7 @@ export const getUserPosts = async (userName: string): Promise<PostType[]> => {
 };
 
 export const deletePost = async (postId: number): Promise<VoidFunction> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/delete";
+  const apiUrl = "http://3.110.165.251:8001/posts/delete";
   try {
     const response: AxiosResponse<VoidFunction> = await axios.delete(
       `${apiUrl}/${postId}`,
@@ -289,7 +289,7 @@ export const deletePost = async (postId: number): Promise<VoidFunction> => {
   }
 };
 export const explore = async (page: number): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/explore";
+  const apiUrl = "http://3.110.165.251:8001/posts/explore";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(
       `${apiUrl}?page=${page}`,
@@ -307,7 +307,7 @@ export const explore = async (page: number): Promise<PostType[]> => {
 };
 
 export const searchPosts = async (keyword: string): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/posts/search";
+  const apiUrl = "http://3.110.165.251:8001/posts/search";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(
       `${apiUrl}?keyword=${keyword}`,
@@ -327,7 +327,7 @@ export const searchPosts = async (keyword: string): Promise<PostType[]> => {
 export const getUserInfoFromToken = async (
   token: string
 ): Promise<UserInfo> => {
-  const apiUrl = "http://13.127.244.146:8002/users/get/info";
+  const apiUrl = "http://13.233.101.190:8002/users/get/info";
   try {
     const response: AxiosResponse<UserInfo> = await axios.get(apiUrl, {
       headers: {
@@ -342,7 +342,7 @@ export const getUserInfoFromToken = async (
 };
 
 export const getAllUsers = async (): Promise<UserInfo[]> => {
-  const apiUrl = "http://13.127.244.146:8002/users/get/all";
+  const apiUrl = "http://13.233.101.190:8002/users/get/all";
   try {
     const response: AxiosResponse<UserInfo[]> = await axios.get(apiUrl, {
       headers: {
@@ -357,7 +357,7 @@ export const getAllUsers = async (): Promise<UserInfo[]> => {
 };
 
 export const getLikedPosts = async (): Promise<PostType[]> => {
-  const apiUrl = "http://13.233.117.199:8001/likes/liked/posts";
+  const apiUrl = "http://3.110.165.251:8001/likes/liked/posts";
   try {
     const response: AxiosResponse<PostType[]> = await axios.get(apiUrl, {
       headers: {
@@ -374,7 +374,7 @@ export const getLikedPosts = async (): Promise<PostType[]> => {
 export const getUserByUserName = async (
   userName: string
 ): Promise<UserInfo> => {
-  const apiUrl = "http://13.127.244.146:8002/users/get";
+  const apiUrl = "http://13.233.101.190:8002/users/get";
   try {
     const response: AxiosResponse<UserInfo> = await axios.get(
       `${apiUrl}/${userName}`,
@@ -392,7 +392,7 @@ export const getUserByUserName = async (
 };
 
 export const updateUser = async (user: IUpdateUser): Promise<UserInfo> => {
-  const apiUrl = "http://13.127.244.146:8002/users/update";
+  const apiUrl = "http://13.233.101.190:8002/users/update";
   const formData = new FormData();
   user.file.forEach((file) => {
     formData.append(`files`, file);
